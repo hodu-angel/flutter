@@ -1,16 +1,44 @@
-# kot
+- 앱의시작
 
-A new Flutter project.
+`runApp(const MyApp());`
 
-## Getting Started
+stless + tab : 앱의 첫번째 화면 단축키
+<br>
+- 텍스트넣기
+```
+return MaterialApp{
+ home: Text('내용')
+};
+```
+<br> 
 
-This project is a starting point for a Flutter application.
+-  아이콘넣기
 
-A few resources to get you started if this is your first Flutter project:
+```
+return MaterialApp{
+ home: Icon(Icons.star)
+};
+```
+<br>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- 이미지넣기
+-이미지의 폴더명이 assets일때 이미지명은 coke.jpg라면 경로는 
+assets/coke.jpg<br>
+-pubspec.yaml파일 : **flutter:** 하위에 **assets:** 추가 **-assets/** 추가<br>
+```
+return MaterialApp{
+ home: Image.asset('경로')
+};
+```
+<br>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 박스생성
+-박스생성 단위는 50LP ==1.2cm
+-Center()를 통해 자식의 기준점을 중앙으로 설정한다.
+```
+return MaterialApp{
+ home: Center(
+ child: Container( width: 50, height: 50, color: Colors.blue),
+)
+};
+```
