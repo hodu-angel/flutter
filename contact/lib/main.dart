@@ -11,8 +11,14 @@ class MyApp extends StatelessWidget {
 
 
     return MaterialApp(
-        home: Center(
-            child: Container( width: 50, height: 50, color: Colors.blue),
+        home: Scaffold(
+          body: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.star),
+              Icon(Icons.shop),
+            ],
+          ),
         )
     );
   }
