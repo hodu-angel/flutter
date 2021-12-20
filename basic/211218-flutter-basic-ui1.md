@@ -50,6 +50,9 @@ class Basic extends StatelessWidget {
 ```
 <hr>
 <br><br><br>
-## 완성 <br>
-![image](https://user-images.githubusercontent.com/90611410/146630375-116a56ef-5ef9-4173-855d-17342a95616e.png)
+
+ ## 완성 <br>
+
+![image](https://user-images.githubusercontent.com/90611410/146732434-4182dcac-5c71-433e-b7cb-fb478f9a03c6.png)
+
 
