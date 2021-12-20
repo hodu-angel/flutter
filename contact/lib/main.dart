@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar( title: Text('앱임') ),
+        //위치조정 Align
         body: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
