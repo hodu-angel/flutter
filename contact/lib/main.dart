@@ -11,24 +11,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar( title: Text('앱임') ),
-        //위치조정 Align
-        body: Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            width: 150, height: 50,
-            //박스 꾸미기
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black)
-            ),
-            //박스 위치 여백주기
-            margin: EdgeInsets.all(30),
-            //박스 내의 여백주기
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Text('padding'),
+        //AppBar에는 leading, title, actions 사용가능
+        appBar: AppBar(
+          leading: Icon(Icons.star),
+          title: Text('앱이얌'),
+          actions: [Icon(Icons.star), Icon(Icons.shop)],
+        ),
+        body: SizedBox(
+          //button은 기본적으로 child:와 onPressed:가 있어야 잘 보인다.
+          child: IconButton(
+            icon: Icon(Icons.star),
+            onPressed: (){} ,
           ),
         ),
-        bottomNavigationBar: BottomAppBar(),
       ),
     );
   }
