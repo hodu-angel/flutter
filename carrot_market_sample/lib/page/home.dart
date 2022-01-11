@@ -11,6 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, String>> datas = [];
+  int _currentPageIndex = 0;
 
   @override
   void initState() {
@@ -244,12 +245,45 @@ class _HomeState extends State<Home> {
     );
   }
 
+  BottomNavigationBarItem _bottomNavigationBarItem(
+      String iconName, String label){
+    return BottomNavigationBarItem(
+        icon: SvgPicture.asset('assets/svg/${iconName}_off.svg', width: 22,),
+        label: label,
+    );
+  }
+
+  Widget _bottomNavigationBarwidget(){
+    return BottomNavigationBar(
+      //선택시 좌측아이콘을 밀고 확대되는 애니메이션 효과를 확대애니메이션으로 고정시킴
+      type: BottomNavigationBarType.fixed,
+      onTap: (int index){
+        print(index);
+        setState(() {
+          _currentPageIndex = index;
+        });
+      },
+      //클릭시 글씨사이즈 조절
+      selectedFontSize: 12,
+      currentIndex: _currentPageIndex,
+      selectedItemColor: Colors.black,
+      selectedLabelStyle: TextStyle(color: Colors.black),
+      items: [
+        _bottomNavigationBarItem('home', '홈'),
+        _bottomNavigationBarItem('notes', '동네생활'),
+        _bottomNavigationBarItem('location', '내 근처'),
+        _bottomNavigationBarItem('chat', '채팅'),
+        _bottomNavigationBarItem('user', '나의 당근'),
+      ],
+    );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbarWidget(),
       body: _bodyWidget(),
-      bottomNavigationBar: BottomAppBar(),
+      bottomNavigationBar: _bottomNavigationBarwidget(),
     );
   }
 }
