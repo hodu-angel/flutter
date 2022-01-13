@@ -11,10 +11,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, String>> datas = [];
-  int _currentPageIndex = 0;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     datas = [
       {
@@ -100,6 +99,12 @@ class _HomeState extends State<Home> {
     ];
   }
 
+  //가격에 '원' 붙이기
+  final oCcy = NumberFormat('#,###', 'ko_KR');
+  String calcStringToWon(String priceString){
+    return "${oCcy.format(int.parse(priceString))}원";
+  }
+
   PreferredSizeWidget _appbarWidget() {
     return AppBar(
       title: GestureDetector(
@@ -148,167 +153,101 @@ class _HomeState extends State<Home> {
     );
   }
 
-  //가격에 '원' 붙이기
-  final oCcy = NumberFormat('#,###', 'ko_KR');
-  String calcStringToWon(String priceString){
-    return "${oCcy.format(int.parse(priceString))}원";
-  }
-
   Widget _bodyWidget() {
-    switch(_currentPageIndex){
-      case 0:
-        return ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          //아이템을 만드는 위젯
-          itemBuilder: (BuildContext _content, int index) {
-            return Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    //이미지
-                    ClipRRect(
-                      //모서리 둥글게
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: Image.asset(
-                        datas[index]["image"].toString(),
-                        width: 100,
-                        height: 100,
-                      ),
-                    ),
-                    //metaData
-                    //Expanded를 해줌으로서 이미지가 사용하는 영역외에는 모두 사용하게 함
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      //아이템을 만드는 위젯
+      itemBuilder: (BuildContext _content, int index) {
+        return Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                //이미지
+                ClipRRect(
+                  //모서리 둥글게
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  child: Image.asset(
+                    datas[index]["image"].toString(),
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
 
-                    Expanded(
-                      child: Container(
-                        height: 100,
-                        padding: const EdgeInsets.only(left: 20),
-                        //width: MediaQuery.of(context).size.width
-                        //device 사이즈만큼을 불러옴 -100은 이미지사이즈가 100이기떄문에.
-                        //하지만 연산이 많아질 것임.
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              datas[index]['title'].toString(),
-                              //글자가 화면을 넘어가면 ...으로 변경됨. 미사용시 자동 줄바꿈
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              datas[index]['location'].toString(),
-                              //withOpacity : 연하게
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black.withOpacity(0.3)),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              calcStringToWon(datas[index]['price'].toString()),
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/heart_off.svg',
-                                      width: 13,
-                                      height: 13,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    //좋아요이미지와 숫자사이의 간격을 위해 SizedBox를 넣음
-                                    Text(datas[index]['likes'].toString()),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                //metaData
+                //Expanded를 해줌으로서 이미지가 사용하는 영역외에는 모두 사용하게 함
+                Expanded(
+                  child: Container(
+                    height: 100,
+                    padding: const EdgeInsets.only(left: 20),
+                    //width: MediaQuery.of(context).size.width
+                    // device 사이즈만큼을 불러옴 -100은 이미지사이즈가 100이기떄문에.
+                    // 하지만 연산이 많아질 것임.
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          datas[index]['title'].toString(),
+                          //글자가 화면을 넘어가면 ...으로 변경됨. 미사용시 자동 줄바꿈
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 15),
                         ),
-                      ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          datas[index]['location'].toString(),
+                          //withOpacity : 연하게
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.3)),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          calcStringToWon(datas[index]['price'].toString()),
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/heart_off.svg',
+                                  width: 13,
+                                  height: 13,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                //좋아요이미지와 숫자사이의 간격을 위해 SizedBox를 넣음
+                                Text(datas[index]['likes'].toString()),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ));
-          },
-          //아이템 사이의 간격을 어떻게 구성할지, 지금은 라인이지만 Custom하도록 도와줌
-          separatorBuilder: (BuildContext _content, int index) {
-            return Container(height: 1, color: Colors.black.withOpacity(0.5));
-          },
-          itemCount: 10,
-        );
-        break;
-      case 1:
-        return Container();
-        break;
-      case 2:
-        return Container();
-        break;
-      case 3:
-        return Container();
-        break;
-      case 4:
-        return Container();
-        break;
-    }
-    //separated : 아이템마다 사이 간격에 라인이 있는데, 이것을 제공받기 위해 사용
-    return Container();
-  }
-
-  BottomNavigationBarItem _bottomNavigationBarItem(
-      String iconName, String label){
-    return BottomNavigationBarItem(
-        icon: Padding(
-          padding: const EdgeInsets.only(bottom: 5),
-          child: SvgPicture.asset('assets/svg/${iconName}_off.svg', width: 22,),
-        ),
-        //선택된 아이콘 색들어오게 함
-        activeIcon: Padding(
-          padding: const EdgeInsets.only(bottom: 5),
-          child: SvgPicture.asset('assets/svg/${iconName}_on.svg', width: 22,),
-        ),
-        label: label,
-    );
-  }
-
-  Widget _bottomNavigationBarwidget(){
-    return BottomNavigationBar(
-      //선택시 좌측아이콘을 밀고 확대되는 애니메이션 효과를 확대애니메이션으로 고정시킴
-      type: BottomNavigationBarType.fixed,
-      onTap: (int index){
-        print(index);
-        setState(() {
-          _currentPageIndex = index;
-        });
+                  ),
+                ),
+              ],
+            ));
       },
-      //클릭시 글씨사이즈 조절
-      selectedFontSize: 12,
-      currentIndex: _currentPageIndex,
-      selectedItemColor: Colors.black,
-      selectedLabelStyle: TextStyle(color: Colors.black),
-      items: [
-        _bottomNavigationBarItem('home', '홈'),
-        _bottomNavigationBarItem('notes', '동네생활'),
-        _bottomNavigationBarItem('location', '내 근처'),
-        _bottomNavigationBarItem('chat', '채팅'),
-        _bottomNavigationBarItem('user', '나의 당근'),
-      ],
+      //아이템 사이의 간격을 어떻게 구성할지, 지금은 라인이지만 Custom하도록 도와줌
+      separatorBuilder: (BuildContext _content, int index) {
+        return Container(height: 1, color: Colors.black.withOpacity(0.5));
+      },
+      itemCount: 10,
     );
-}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbarWidget(),
       body: _bodyWidget(),
-      bottomNavigationBar: _bottomNavigationBarwidget(),
     );
   }
 }
