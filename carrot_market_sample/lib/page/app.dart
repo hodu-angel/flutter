@@ -11,7 +11,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  int _currentPageIndex = 0;
+  //버전 업으로 인해 나중에 초기화 할것이면 late를 사용해주거나, 처음부터 초기화를 해줘야 된다.
+  late int _currentPageIndex;
 
   @override
   void initState() {
