@@ -11,6 +11,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, String>> datas = [];
+  final _valueList = ['아라동', '오라동', '도남동'];
+  String _value = '아라동';
 
   @override
   void initState(){
@@ -114,14 +116,25 @@ class _HomeState extends State<Home> {
         onLongPress: () {
           print('long pressed:');
         },
-        child: Row(
-          children: [
-            Text('아라동'),
-            Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black,
-            ),
-          ],
+        child: DropdownButton<String>(
+          value: _value,
+          icon: Icon(Icons.arrow_drop_down),
+          underline: Container(),
+          items: _valueList.map(
+                (value) {
+              return DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              );
+            },
+          ).toList(),
+          //null-safety로 인해 null타입 사용
+          onChanged: (value) {
+            setState(() {
+              _value = value!;
+              print(_value);
+            });
+          },
         ),
       ),
       //상단바의 아래 그림자효과를 없애고 싶을 때 사용
