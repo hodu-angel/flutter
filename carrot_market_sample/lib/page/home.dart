@@ -117,9 +117,12 @@ class _HomeState extends State<Home> {
           print('long pressed:');
         },
         child: DropdownButton<String>(
+          isDense: true,
           value: _value,
           icon: Icon(Icons.arrow_drop_down),
           underline: Container(),
+          //테두리 둥글게
+          borderRadius: BorderRadius.all(Radius.circular(10)),
           items: _valueList.map(
                 (value) {
               return DropdownMenuItem(
