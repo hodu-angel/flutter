@@ -11,11 +11,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, String>> datas = [];
+  late String currentLocation;
+
   final _valueList = ['아라동', '오라동', '도남동'];
   String _value = '아라동';
 
   @override
   void initState(){
+    currentLocation = '아라동';
     super.initState();
     datas = [
       {
@@ -135,6 +138,8 @@ class _HomeState extends State<Home> {
           onChanged: (value) {
             setState(() {
               _value = value!;
+              currentLocation = value;
+              //print(currentLocation);
               print(_value);
             });
           },
