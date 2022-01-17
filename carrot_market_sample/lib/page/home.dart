@@ -16,10 +16,18 @@ class _HomeState extends State<Home> {
   String _value = '아라동';
   late ContentsRepository contentsRepository;
 
+  //initState단계에선 Context가 생성되지않는다.
+  //didChangeDependencies단계에선 Context가 생성이 된다.
+  //Context에 접근하기 위한 로직은 didChange...단계에서 작성해준다.
   @override
   void initState(){
     super.initState();
     currentLocation = '아라동';
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     contentsRepository = ContentsRepository();
   }
 
@@ -94,7 +102,8 @@ class _HomeState extends State<Home> {
   }
 
   _loadContents(){
-
+    //선택한 동에 해당되는 내용들 보여줌
+    return contentsRepository.loadContentsFromLocation(currentLocation);
   }
 
   Widget _bodyWidget() {
