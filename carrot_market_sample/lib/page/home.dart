@@ -112,6 +112,13 @@ class _HomeState extends State<Home> {
       future: _loadContents(),
       builder: (context, dynamic snapshot){
         //snapshot에 data가 있다.
+        //데이터가 있는지 없는지 check 필요
+        //연결되기 전이라면 로딩중표시
+        if(snapshot.connectionState != ConnectionState.done){
+          return Center(child: CircularProgressIndicator());
+        }
+
+
         List<Map<String, String>> datas = snapshot.data;
 
         return ListView.separated(
