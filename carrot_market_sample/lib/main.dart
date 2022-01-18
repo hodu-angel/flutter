@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
           //2.5ver부터 primaryColor 기능이 deprecated됐다.
           backgroundColor: Colors.white,
           titleTextStyle: TextStyle(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.black),
         ),
         primarySwatch: Colors.blue,
         //primaryColor: Colors.white,
