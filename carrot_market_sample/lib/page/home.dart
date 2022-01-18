@@ -132,10 +132,15 @@ class _HomeState extends State<Home> {
                   ClipRRect(
                     //모서리 둥글게
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    child: Image.asset(
-                      datas[index]["image"].toString(),
-                      width: 100,
-                      height: 100,
+                    //Hero를 이용해 이미지 클릭시 이미지가 점차확대 되면서 페이지전환이 이뤄짐
+                    child: Hero(
+                      //tag 동일한 이름을 줄 수 없다.
+                      tag: datas[index]['cid'].toString(),
+                      child: Image.asset(
+                        datas[index]["image"].toString(),
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                   ),
 
@@ -145,7 +150,7 @@ class _HomeState extends State<Home> {
                     child: Container(
                       height: 100,
                       padding: const EdgeInsets.only(left: 20),
-                      //width: MediaQuery.of(context).size.width
+                      //width: MediaQuery.of(context).size.width-100
                       // device 사이즈만큼을 불러옴 -100은 이미지사이즈가 100이기떄문에.
                       // 하지만 연산이 많아질 것임.
                       child: Column(

@@ -10,7 +10,13 @@ class DetailContentView extends StatefulWidget {
 }
 
 class _DetailContentViewState extends State<DetailContentView> {
-
+  Size? size;
+  @override
+  void didChangeDependencies()
+  {
+    super.didChangeDependencies();
+    size = MediaQuery.of(context).size;
+  }
   PreferredSizeWidget _appbarWidget(){
     //transparent 부모의 속성을 따라간다.
     return AppBar(
@@ -24,9 +30,13 @@ class _DetailContentViewState extends State<DetailContentView> {
   }
 
   Widget _bodyWidget(){
-    return Container(
-      child: Image.asset(widget.data!['image'].toString(),
-        fit: BoxFit.fill,),
+    return Hero(
+      tag: widget.data!['cid'].toString(),
+      child: Container(
+        child: Image.asset(widget.data!['image'].toString(),
+          width: size!.width,
+          fit: BoxFit.fill,),
+      ),
     );
   }
 
