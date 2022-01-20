@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class DetailContentView extends StatefulWidget {
@@ -11,40 +12,79 @@ class DetailContentView extends StatefulWidget {
 
 class _DetailContentViewState extends State<DetailContentView> {
   Size? size;
+  final CarouselController _controller = CarouselController();
+
   @override
-  void didChangeDependencies()
-  {
+  void didChangeDependencies() {
     super.didChangeDependencies();
     size = MediaQuery.of(context).size;
   }
-  PreferredSizeWidget _appbarWidget(){
+
+  PreferredSizeWidget _appbarWidget() {
     //transparent 부모의 속성을 따라간다.
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: IconButton(onPressed: (){
-        //현재 히스토리 제거하면서 뒤로감
-        Navigator.pop(context);
-      }, icon: Icon(Icons.arrow_back), color: Colors.white,),
+      leading: IconButton(
+        onPressed: () {
+          //현재 히스토리 제거하면서 뒤로감
+          Navigator.pop(context);
+        },
+        icon: Icon(Icons.arrow_back),
+        color: Colors.white,
+      ),
       actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.share, color: Colors.white,)),
-        IconButton(onPressed: (){}, icon: Icon(Icons.more_vert), color: Colors.white,),
+        IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+            )),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.more_vert),
+          color: Colors.white,
+        ),
       ],
     );
   }
 
-  Widget _bodyWidget(){
-    return Hero(
-      tag: widget.data!['cid'].toString(),
-      child: Container(
-        child: Image.asset(widget.data!['image'].toString(),
-          width: size!.width,
-          fit: BoxFit.fill,),
+  Widget _bodyWidget() {
+    return Container(
+      child: Hero(
+        tag: widget.data!['cid'].toString(),
+        child: CarouselSlider(
+          // options: CarouselOptions(
+          //   //height는 width만큼 size가 동일해야 된다.
+          //   height: size!.width,
+          //   initialPage: 0,
+          //   //무한 스크롤 방지
+          //   enableInfiniteScroll: false,
+          // ),
+          //slide를 보여줄 이미지
+          items: List?.generate(5, (index) {
+            return Image.asset(
+              widget.data!['image'].toString(),
+              width: size!.width,
+              fit: BoxFit.fill,
+            );
+          }),
+          carouselController: _controller,
+          options: CarouselOptions(
+              autoPlay: true,
+              enlargeCenterPage: true,
+              aspectRatio: 2.0,
+              onPageChanged: (index, reason) {
+                // setState(() {
+                //   _current = index;
+                // });
+              }),
+        ),
       ),
     );
   }
 
-  Widget _bottomBarWidget(){
+  Widget _bottomBarWidget() {
     return Container(
       width: size!.width,
       height: 55,

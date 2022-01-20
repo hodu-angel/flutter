@@ -1,7 +1,6 @@
 import 'package:carrot_market_sample/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
