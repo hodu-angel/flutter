@@ -22,9 +22,13 @@ class _DetailContentViewState extends State<DetailContentView> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
+      leading: IconButton(onPressed: (){
+        //현재 히스토리 제거하면서 뒤로감
+        Navigator.pop(context);
+      }, icon: Icon(Icons.arrow_back), color: Colors.white,),
       actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.share)),
-        IconButton(onPressed: (){}, icon: Icon(Icons.more_vert)),
+        IconButton(onPressed: (){}, icon: Icon(Icons.share, color: Colors.white,)),
+        IconButton(onPressed: (){}, icon: Icon(Icons.more_vert), color: Colors.white,),
       ],
     );
   }
@@ -40,6 +44,14 @@ class _DetailContentViewState extends State<DetailContentView> {
     );
   }
 
+  Widget _bottomBarWidget(){
+    return Container(
+      width: size!.width,
+      height: 55,
+      color: Colors.red,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +59,7 @@ class _DetailContentViewState extends State<DetailContentView> {
       extendBodyBehindAppBar: true,
       appBar: _appbarWidget(),
       body: _bodyWidget(),
+      bottomNavigationBar: _bottomBarWidget(),
     );
   }
 }
