@@ -166,7 +166,7 @@ class ContentsRepository {
     ]
   };
 
-  Future<List<Map<String, String>>> loadContentsFromLocation(
+  Future<List<Map<String, String>>?> loadContentsFromLocation(
       String location) async {
     //API 통신 location값을 보내주면서
     //1000milli = 1sec
