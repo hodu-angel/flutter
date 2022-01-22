@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
   //didChangeDependencies단계에선 Context가 생성이 된다.
   //Context에 접근하기 위한 로직은 didChange...단계에서 작성해준다.
   @override
-  void initState(){
+  void initState() {
     super.initState();
     currentLocation = '아라동';
   }
@@ -34,8 +34,9 @@ class _HomeState extends State<Home> {
 
   //가격에 '원' 붙이기
   final oCcy = NumberFormat('#,###', 'ko_KR');
-  String calcStringToWon(String priceString){
-    if(priceString == '무료나눔') return priceString;
+
+  String calcStringToWon(String priceString) {
+    if (priceString == '무료나눔') return priceString;
     return "${oCcy.format(int.parse(priceString))}원";
   }
 
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
           //테두리 둥글게
           borderRadius: BorderRadius.all(Radius.circular(10)),
           items: _valueList.map(
-                (value) {
+            (value) {
               return DropdownMenuItem(
                 value: value,
                 child: Text(value),
@@ -103,27 +104,27 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _loadContents(){
+  _loadContents() {
     //선택한 동에 해당되는 내용들 보여줌
     return contentsRepository.loadContentsFromLocation(currentLocation);
   }
 
-  _makeDataList(List<Map<String, String>> datas){
+  _makeDataList(List<Map<String, String>> datas) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       //아이템을 만드는 위젯
       itemBuilder: (BuildContext _content, int index) {
         return GestureDetector(
           //이미지 클릭시 확대되면서 상세페이지 이동
-          onTap: (){
+          onTap: () {
             //페이지 전환
             Navigator.push(context,
-                MaterialPageRoute(builder: (BuildContext context){
-                  return DetailContentView(
-                    data: datas[index],
-                  );
-                }));
-            },
+                MaterialPageRoute(builder: (BuildContext context) {
+              return DetailContentView(
+                data: datas[index],
+              );
+            }));
+          },
           child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
@@ -219,26 +220,30 @@ class _HomeState extends State<Home> {
     //기다렸다 데이터가 처리될때까지 도와주는 builder
     return FutureBuilder(
       future: _loadContents(),
-      builder: (context, dynamic snapshot){
+      builder: (context, dynamic snapshot) {
         //snapshot에 data가 있다.
         //데이터가 있는지 없는지 check 필요
         //연결되기 전이라면 로딩중표시
-        if(snapshot.connectionState != ConnectionState.done){
+        if (snapshot.connectionState != ConnectionState.done) {
           return Center(child: CircularProgressIndicator());
         }
 
-        if(snapshot.hasError){
+        if (snapshot.hasError) {
           print(snapshot.error);
-          return Center(child: Text('데이터 오류'),);
+          return Center(
+            child: Text('데이터 오류'),
+          );
         }
 
         //데이터가 있는 경우
-        if(snapshot.hasData){
+        if (snapshot.hasData) {
           return _makeDataList(snapshot.data);
         }
 
         //나머지
-        return Center(child: Text('해당 지역에 데이터가 없습니다.'),);
+        return Center(
+          child: Text('해당 지역에 데이터가 없습니다.'),
+        );
       },
     );
   }
