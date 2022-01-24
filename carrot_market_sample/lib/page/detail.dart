@@ -54,13 +54,18 @@ class _DetailContentViewState extends State<DetailContentView> {
       child: Hero(
         tag: widget.data!['cid'].toString(),
         child: CarouselSlider(
-          // options: CarouselOptions(
-          //   //height는 width만큼 size가 동일해야 된다.
-          //   height: size!.width,
-          //   initialPage: 0,
-          //   //무한 스크롤 방지
-          //   enableInfiniteScroll: false,
-          // ),
+          options: CarouselOptions(
+            //height는 width만큼 size가 동일해야 된다.
+            height: size!.width,
+            initialPage: 0,
+            //무한 스크롤 방지
+            enableInfiniteScroll: false,
+            //이미지화면 사용 비율
+            viewportFraction: 1,
+            onPageChanged: (index, reason){
+              print(index);
+            }
+          ),
           //slide를 보여줄 이미지
           items: List?.generate(5, (index) {
             return Image.asset(
@@ -70,15 +75,6 @@ class _DetailContentViewState extends State<DetailContentView> {
             );
           }),
           carouselController: _controller,
-          options: CarouselOptions(
-              autoPlay: true,
-              enlargeCenterPage: true,
-              aspectRatio: 2.0,
-              onPageChanged: (index, reason) {
-                // setState(() {
-                //   _current = index;
-                // });
-              }),
         ),
       ),
     );
