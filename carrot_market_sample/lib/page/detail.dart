@@ -12,12 +12,22 @@ class DetailContentView extends StatefulWidget {
 
 class _DetailContentViewState extends State<DetailContentView> {
   Size? size;
+  List<String>? imgList;
+  int? _current;
   final CarouselController _controller = CarouselController();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     size = MediaQuery.of(context).size;
+    _current = 0;
+    imgList = [
+      widget.data!['image'].toString(),
+      widget.data!['image'].toString(),
+      widget.data!['image'].toString(),
+      widget.data!['image'].toString(),
+      widget.data!['image'].toString(),
+    ];
   }
 
   PreferredSizeWidget _appbarWidget() {
@@ -51,31 +61,56 @@ class _DetailContentViewState extends State<DetailContentView> {
 
   Widget _bodyWidget() {
     return Container(
-      child: Hero(
-        tag: widget.data!['cid'].toString(),
-        child: CarouselSlider(
-          options: CarouselOptions(
-            //height는 width만큼 size가 동일해야 된다.
-            height: size!.width,
-            initialPage: 0,
-            //무한 스크롤 방지
-            enableInfiniteScroll: false,
-            //이미지화면 사용 비율
-            viewportFraction: 1,
-            onPageChanged: (index, reason){
-              print(index);
-            }
+      child: Column(
+        children: [
+          Hero(
+            tag: widget.data!['cid'].toString(),
+            child: CarouselSlider(
+              options: CarouselOptions(
+                //height는 width만큼 size가 동일해야 된다.
+                height: size!.width,
+                initialPage: 0,
+                //무한 스크롤 방지
+                enableInfiniteScroll: false,
+                //이미지화면 사용 비율
+                viewportFraction: 1,
+                onPageChanged: (index, reason){
+                  setState(() {
+                    _current = index;
+                  });
+                }
+              ),
+              //slide를 보여줄 이미지
+              items: imgList?.map((url) {
+                return Image.asset(
+                  url,
+                  width: size!.width,
+                  fit: BoxFit.fill,
+                );
+              }).toList(),
+              carouselController: _controller,
+            ),
           ),
-          //slide를 보여줄 이미지
-          items: List?.generate(5, (index) {
-            return Image.asset(
-              widget.data!['image'].toString(),
-              width: size!.width,
-              fit: BoxFit.fill,
-            );
-          }),
-          carouselController: _controller,
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: imgList!.asMap().entries.map((entry) {
+              return GestureDetector(
+                onTap: () => _controller.animateToPage(entry.key),
+                child: Container(
+                  width: 12.0,
+                  height: 12.0,
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: (Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black)
+                          .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
