@@ -59,8 +59,8 @@ class _DetailContentViewState extends State<DetailContentView> {
     );
   }
 
-  Widget _bodyWidget() {
-    return Container(
+  Widget _makeSliderImage(){
+    return  Container(
       child: Stack(
         children: [
           Hero(
@@ -68,17 +68,17 @@ class _DetailContentViewState extends State<DetailContentView> {
             child: CarouselSlider(
               options: CarouselOptions(
                 //height는 width만큼 size가 동일해야 된다.
-                height: size!.width,
-                initialPage: 0,
-                //무한 스크롤 방지
-                enableInfiniteScroll: false,
-                //이미지화면 사용 비율
-                viewportFraction: 1,
-                onPageChanged: (index, reason){
-                  setState(() {
-                    _current = index;
-                  });
-                }
+                  height: size!.width,
+                  initialPage: 0,
+                  //무한 스크롤 방지
+                  enableInfiniteScroll: false,
+                  //이미지화면 사용 비율
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason){
+                    setState(() {
+                      _current = index;
+                    });
+                  }
               ),
               //slide를 보여줄 이미지
               items: imgList?.map((map) {
@@ -123,6 +123,19 @@ class _DetailContentViewState extends State<DetailContentView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _sellerSimpleInfo(){
+    return Container();
+  }
+
+  Widget _bodyWidget() {
+    return Column(
+      children: [
+        _makeSliderImage(),
+        _sellerSimpleInfo(),
+      ],
     );
   }
 
