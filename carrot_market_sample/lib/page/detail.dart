@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carrot_market_sample/components/manor_temperature_widget.dart';
 import 'package:flutter/material.dart';
 
 class DetailContentView extends StatefulWidget {
@@ -22,11 +23,11 @@ class _DetailContentViewState extends State<DetailContentView> {
     size = MediaQuery.of(context).size;
     _current = 0;
     imgList = [
-      {'id' : '1', 'url' :  widget.data!['image'].toString()},
-      {'id' : '2', 'url' :  widget.data!['image'].toString()},
-      {'id' : '3', 'url' :  widget.data!['image'].toString()},
-      {'id' : '4', 'url' :  widget.data!['image'].toString()},
-      {'id' : '5', 'url' :  widget.data!['image'].toString()},
+      {'id': '1', 'url': widget.data!['image'].toString()},
+      {'id': '2', 'url': widget.data!['image'].toString()},
+      {'id': '3', 'url': widget.data!['image'].toString()},
+      {'id': '4', 'url': widget.data!['image'].toString()},
+      {'id': '5', 'url': widget.data!['image'].toString()},
     ];
   }
 
@@ -59,27 +60,26 @@ class _DetailContentViewState extends State<DetailContentView> {
     );
   }
 
-  Widget _makeSliderImage(){
-    return  Container(
+  Widget _makeSliderImage() {
+    return Container(
       child: Stack(
         children: [
           Hero(
             tag: widget.data!['cid'].toString(),
             child: CarouselSlider(
               options: CarouselOptions(
-                //height는 width만큼 size가 동일해야 된다.
+                  //height는 width만큼 size가 동일해야 된다.
                   height: size!.width,
                   initialPage: 0,
                   //무한 스크롤 방지
                   enableInfiniteScroll: false,
                   //이미지화면 사용 비율
                   viewportFraction: 1,
-                  onPageChanged: (index, reason){
+                  onPageChanged: (index, reason) {
                     setState(() {
                       _current = index;
                     });
-                  }
-              ),
+                  }),
               //slide를 보여줄 이미지
               items: imgList?.map((map) {
                 return Image.asset(
@@ -107,14 +107,15 @@ class _DetailContentViewState extends State<DetailContentView> {
                     width: 12.0,
                     height: 12.0,
                     //horizontal로 이미지 슬라이드버튼 사이간격을 늘린다.
-                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 5.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: (Theme.of(context).brightness == Brightness.dark
-                        //선택 됐을 때 색
-                            ? Colors.white
-                        //미선택일 때 색
-                            : Colors.white.withOpacity(0.5))
+                                //선택 됐을 때 색
+                                ? Colors.white
+                                //미선택일 때 색
+                                : Colors.white.withOpacity(0.5))
                             .withOpacity(_current == entry.key ? 0.9 : 0.4)),
                   ),
                 );
@@ -126,8 +127,37 @@ class _DetailContentViewState extends State<DetailContentView> {
     );
   }
 
-  Widget _sellerSimpleInfo(){
-    return Container();
+  Widget _sellerSimpleInfo() {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Row(
+        children: [
+          // ClipRRect(
+          //   borderRadius: BorderRadius.circular(50),
+          //   child: Container(
+          //     width: 50, height: 50, child: Image.asset('assets/images/user.png'),
+          //   ),
+          // ),
+          CircleAvatar(
+            radius: 25,
+            backgroundImage: Image.asset('assets/images/user.png').image,
+          ),
+          SizedBox(width: 10,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '얼른사가세요',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              Text('제주시 도담동'),
+            ],
+          ),
+          //Expanded를 줌으로써 나머지 공간을 차지하게 된다.
+          Expanded(child: ManorTemperature(manorTemp: 37.5)),
+        ],
+      ),
+    );
   }
 
   Widget _bodyWidget() {
