@@ -260,7 +260,22 @@ class _DetailContentViewState extends State<DetailContentView> {
               //crossAxisSpacing : 아이템 왼오른줄 간격
                 crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
             delegate: SliverChildListDelegate(List.generate(20, (index) {
-              return Container(color: Colors.green, height: 70,);
+              return Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        color: Colors.grey,
+                        height: 120,
+                      ),
+                    ),
+                    Text('상품 제목', style: TextStyle(fontSize: 14)),
+                    Text('금액', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              );
             }).toList()),
           ),
         )
