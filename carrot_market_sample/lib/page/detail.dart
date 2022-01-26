@@ -160,12 +160,56 @@ class _DetailContentViewState extends State<DetailContentView> {
     );
   }
 
+  Widget _line(){
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+        height: 1,
+        color: Colors.grey.withOpacity(0.3)
+    );
+  }
+
+  Widget _contentDetail(){
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            widget.data!['title'] as String,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20
+            ),
+          ),
+          Text(
+            '디지털/가전 22시간 전',
+            style: TextStyle(
+              color: Colors.grey,
+                fontSize: 12,
+            ),
+          ),
+          Text(
+            '선물받은 새상품이고\n상품 꺼내보기만 했습니다\n거래는 직거래만 합니다.',
+            style: TextStyle(
+              fontSize: 15,
+              //글씨간격을 조정
+              height: 1.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _bodyWidget() {
-    return Column(
-      children: [
-        _makeSliderImage(),
-        _sellerSimpleInfo(),
-      ],
+    //스크롤뷰 추가
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _makeSliderImage(),
+          _sellerSimpleInfo(),
+          _line(),
+          _contentDetail(),
+        ],
+      ),
     );
   }
 
