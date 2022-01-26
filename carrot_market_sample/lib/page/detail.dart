@@ -237,17 +237,33 @@ class _DetailContentViewState extends State<DetailContentView> {
 
   Widget _bodyWidget() {
     //스크롤뷰 추가
-    return CustomScrollView(slivers: [
+    return CustomScrollView(
+      slivers: [
         SliverList(
-          delegate: SliverChildListDelegate([
-                  _makeSliderImage(),
-                  _sellerSimpleInfo(),
-                  _line(),
-                  _contentDetail(),
-                  _line(),
-                  _otherCellContents(),
-            ])
-        ),
+            delegate: SliverChildListDelegate([
+          _makeSliderImage(),
+          _sellerSimpleInfo(),
+          _line(),
+          _contentDetail(),
+          _line(),
+          _otherCellContents(),
+        ])),
+
+        //padding을 줄 수 있는 sliverWidget
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          //등분하여 이미지를 여러개 보여줄것임.
+          sliver: SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              //mainAxisSpacing : 아이템 위아래줄 간격
+              //crossAxisCount : 아이템 등분 갯수
+              //crossAxisSpacing : 아이템 왼오른줄 간격
+                crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+            delegate: SliverChildListDelegate(List.generate(20, (index) {
+              return Container(color: Colors.green, height: 70,);
+            }).toList()),
+          ),
+        )
       ],
     );
   }
