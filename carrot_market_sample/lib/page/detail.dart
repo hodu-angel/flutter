@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_sample/components/manor_temperature_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class DetailContentView extends StatefulWidget {
   Map<String, String>? data;
@@ -255,10 +256,12 @@ class _DetailContentViewState extends State<DetailContentView> {
           //등분하여 이미지를 여러개 보여줄것임.
           sliver: SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //mainAxisSpacing : 아이템 위아래줄 간격
-              //crossAxisCount : 아이템 등분 갯수
-              //crossAxisSpacing : 아이템 왼오른줄 간격
-                crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+                //mainAxisSpacing : 아이템 위아래줄 간격
+                //crossAxisCount : 아이템 등분 갯수
+                //crossAxisSpacing : 아이템 왼오른줄 간격
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10),
             delegate: SliverChildListDelegate(List.generate(20, (index) {
               return Container(
                 child: Column(
@@ -272,7 +275,9 @@ class _DetailContentViewState extends State<DetailContentView> {
                       ),
                     ),
                     Text('상품 제목', style: TextStyle(fontSize: 14)),
-                    Text('금액', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text('금액',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                   ],
                 ),
               );
@@ -285,9 +290,35 @@ class _DetailContentViewState extends State<DetailContentView> {
 
   Widget _bottomBarWidget() {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       width: size!.width,
       height: 55,
-      color: Colors.red,
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              print('관심상품 이벤트 발생');
+            },
+            child: SvgPicture.asset(
+              'assets/svg/heart_off.svg',
+              width: 20,
+              height: 20,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 15, right: 10),
+            width: 1,
+            height: 40,
+            color: Colors.grey.withOpacity(0.3),
+          ),
+          Column(
+            children: [
+              Text(widget.data!['price'] as String,
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
