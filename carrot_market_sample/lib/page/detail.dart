@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_sample/components/manor_temperature_widget.dart';
+import 'package:carrot_market_sample/utils/data_utils..dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -313,10 +314,35 @@ class _DetailContentViewState extends State<DetailContentView> {
           ),
           Column(
             children: [
-              Text(widget.data!['price'] as String,
+              Text(DataUtils.calcStringToWon(widget.data!['price'] as String),
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+              Text(
+                '가격제안불가',
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+              )
             ],
           ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Color(0xfff08f4f)),
+                  child: Text(
+                    '채팅으로 거래하기',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
