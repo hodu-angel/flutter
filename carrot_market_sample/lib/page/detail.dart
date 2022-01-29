@@ -36,7 +36,7 @@ class _DetailContentViewState extends State<DetailContentView> {
   PreferredSizeWidget _appbarWidget() {
     //transparent 부모의 속성을 따라간다.
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white.withAlpha(0),
       elevation: 0,
       leading: IconButton(
         onPressed: () {
