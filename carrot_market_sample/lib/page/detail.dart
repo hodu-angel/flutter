@@ -28,8 +28,12 @@ class _DetailContentViewState extends State<DetailContentView> {
       //offset: scroll의 위치
       print(_scrollController.offset);
       setState(() {
-        //scroll의 위치를 scrollpositionToAlpha에 저장
-        scrollpositionToAlpha =_scrollController.offset;
+        if(_scrollController.offset > 255){
+          scrollpositionToAlpha = 255;
+        } else {
+          //scroll의 위치를 scrollpositionToAlpha에 저장
+          scrollpositionToAlpha =_scrollController.offset;
+        }
       });
     });
   }
@@ -51,8 +55,9 @@ class _DetailContentViewState extends State<DetailContentView> {
   PreferredSizeWidget _appbarWidget() {
     //transparent 부모의 속성을 따라간다.
     //widthAlpha 스크롤의 위치에 따라 이동하게 되면 색이 화이트로 변한다.
+    //255를 넘어가면 처음투명으로 다시 돌아간다. 이것을 방지하기 위해 offset을 체크해준다.
     return AppBar(
-      backgroundColor: Colors.white.withAlpha(0),
+      backgroundColor: Colors.white.withAlpha(scrollpositionToAlpha.toInt()),
       elevation: 0,
       leading: IconButton(
         onPressed: () {
