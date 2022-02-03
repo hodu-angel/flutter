@@ -13,7 +13,8 @@ class DetailContentView extends StatefulWidget {
   _DetailContentViewState createState() => _DetailContentViewState();
 }
 
-class _DetailContentViewState extends State<DetailContentView> {
+class _DetailContentViewState extends State<DetailContentView>
+    with SingleTickerProviderStateMixin {
   Size? size;
   List<Map<String, String>?>? imgList;
   int? _current;
@@ -21,19 +22,28 @@ class _DetailContentViewState extends State<DetailContentView> {
   final CarouselController _controller = CarouselController();
   final ScrollController _scrollController = ScrollController();
 
+  //appBar의 버튼들을 스크롤시 다시 색을 바꾸기 위해 사용함
+  late AnimationController _animationController;
+  late Animation _colorTween;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    _scrollController.addListener((){
+    //이 클래스에 animator를 달아주겠다는 것.
+    _animationController = AnimationController(vsync: this);
+    _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
+        .animate(_animationController);
+    _scrollController.addListener(() {
       //offset: scroll의 위치
       print(_scrollController.offset);
       setState(() {
-        if(_scrollController.offset > 255){
+        if (_scrollController.offset > 255) {
           scrollpositionToAlpha = 255;
         } else {
           //scroll의 위치를 scrollpositionToAlpha에 저장
-          scrollpositionToAlpha =_scrollController.offset;
+          scrollpositionToAlpha = _scrollController.offset;
         }
+        _animationController.value = scrollpositionToAlpha / 255;
       });
     });
   }
@@ -52,6 +62,12 @@ class _DetailContentViewState extends State<DetailContentView> {
     ];
   }
 
+  Widget _makeIcon(IconData icon) {
+    return AnimatedBuilder(
+        animation: _colorTween,
+        builder: (context, child) => Icon(icon, color: _colorTween.value));
+  }
+
   PreferredSizeWidget _appbarWidget() {
     //transparent 부모의 속성을 따라간다.
     //widthAlpha 스크롤의 위치에 따라 이동하게 되면 색이 화이트로 변한다.
@@ -60,24 +76,20 @@ class _DetailContentViewState extends State<DetailContentView> {
       backgroundColor: Colors.white.withAlpha(scrollpositionToAlpha.toInt()),
       elevation: 0,
       leading: IconButton(
-        onPressed: () {
-          //현재 히스토리 제거하면서 뒤로감
-          Navigator.pop(context);
-        },
-        icon: Icon(Icons.arrow_back),
-        color: Colors.white,
+          onPressed: () {
+            //현재 히스토리 제거하면서 뒤로감
+            Navigator.pop(context);
+          },
+          icon: _makeIcon(Icons.arrow_back)
       ),
       actions: [
         IconButton(
             onPressed: () {},
-            icon: Icon(
-              Icons.share,
-              color: Colors.white,
-            )),
+            icon: _makeIcon(Icons.share)
+        ),
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.more_vert),
-          color: Colors.white,
+          icon: _makeIcon(Icons.more_vert)
         ),
       ],
     );
@@ -261,7 +273,8 @@ class _DetailContentViewState extends State<DetailContentView> {
   Widget _bodyWidget() {
     //스크롤뷰 추가
     //controller 에서 위젯값을 받아온다.
-    return CustomScrollView( controller: _scrollController,
+    return CustomScrollView(
+      controller: _scrollController,
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
