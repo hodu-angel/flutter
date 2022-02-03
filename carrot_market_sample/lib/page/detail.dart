@@ -80,17 +80,10 @@ class _DetailContentViewState extends State<DetailContentView>
             //현재 히스토리 제거하면서 뒤로감
             Navigator.pop(context);
           },
-          icon: _makeIcon(Icons.arrow_back)
-      ),
+          icon: _makeIcon(Icons.arrow_back)),
       actions: [
-        IconButton(
-            onPressed: () {},
-            icon: _makeIcon(Icons.share)
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: _makeIcon(Icons.more_vert)
-        ),
+        IconButton(onPressed: () {}, icon: _makeIcon(Icons.share)),
+        IconButton(onPressed: () {}, icon: _makeIcon(Icons.more_vert)),
       ],
     );
   }
