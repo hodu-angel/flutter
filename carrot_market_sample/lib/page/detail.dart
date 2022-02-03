@@ -17,7 +17,22 @@ class _DetailContentViewState extends State<DetailContentView> {
   Size? size;
   List<Map<String, String>?>? imgList;
   int? _current;
+  double scrollpositionToAlpha = 0;
   final CarouselController _controller = CarouselController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState(){
+    super.initState();
+    _scrollController.addListener((){
+      //offset: scroll의 위치
+      print(_scrollController.offset);
+      setState(() {
+        //scroll의 위치를 scrollpositionToAlpha에 저장
+        scrollpositionToAlpha =_scrollController.offset;
+      });
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -35,6 +50,7 @@ class _DetailContentViewState extends State<DetailContentView> {
 
   PreferredSizeWidget _appbarWidget() {
     //transparent 부모의 속성을 따라간다.
+    //widthAlpha 스크롤의 위치에 따라 이동하게 되면 색이 화이트로 변한다.
     return AppBar(
       backgroundColor: Colors.white.withAlpha(0),
       elevation: 0,
@@ -239,7 +255,8 @@ class _DetailContentViewState extends State<DetailContentView> {
 
   Widget _bodyWidget() {
     //스크롤뷰 추가
-    return CustomScrollView(
+    //controller 에서 위젯값을 받아온다.
+    return CustomScrollView( controller: _scrollController,
       slivers: [
         SliverList(
             delegate: SliverChildListDelegate([
