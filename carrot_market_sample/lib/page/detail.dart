@@ -26,9 +26,13 @@ class _DetailContentViewState extends State<DetailContentView>
   late AnimationController _animationController;
   late Animation _colorTween;
 
+  //장바구니 등록시 색채우게 함
+  late bool isMyFavoriteContent;
+
   @override
   void initState() {
     super.initState();
+    isMyFavoriteContent = false;
     //이 클래스에 animator를 달아주겠다는 것.
     _animationController = AnimationController(vsync: this);
     _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
@@ -327,11 +331,15 @@ class _DetailContentViewState extends State<DetailContentView>
           GestureDetector(
             onTap: () {
               print('관심상품 이벤트 발생');
+              setState(() {
+                isMyFavoriteContent = !isMyFavoriteContent;
+              });
             },
             child: SvgPicture.asset(
-              'assets/svg/heart_off.svg',
+              isMyFavoriteContent ? 'assets/svg/heart_on.svg' : 'assets/svg/heart_off.svg',
               width: 20,
               height: 20,
+              color: Color(0xfff08f4f),
             ),
           ),
           Container(
