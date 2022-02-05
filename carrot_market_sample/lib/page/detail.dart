@@ -334,9 +334,16 @@ class _DetailContentViewState extends State<DetailContentView>
               setState(() {
                 isMyFavoriteContent = !isMyFavoriteContent;
               });
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    isMyFavoriteContent ? '관심목록에 추가됐습니다.' : '관심목록에서 삭제됐습니다.'),
+                duration: Duration(milliseconds: 1000),
+              ));
             },
             child: SvgPicture.asset(
-              isMyFavoriteContent ? 'assets/svg/heart_on.svg' : 'assets/svg/heart_off.svg',
+              isMyFavoriteContent
+                  ? 'assets/svg/heart_on.svg'
+                  : 'assets/svg/heart_off.svg',
               width: 20,
               height: 20,
               color: Color(0xfff08f4f),
@@ -386,6 +393,8 @@ class _DetailContentViewState extends State<DetailContentView>
 
   @override
   Widget build(BuildContext context) {
+    //Scaffold에서 showSnackBar를 사용할 수 있다.
+    //rule로 key를 등록해야 된다.
     return Scaffold(
       //앱바의 뒤로 확장을 하겠다.
       extendBodyBehindAppBar: true,
