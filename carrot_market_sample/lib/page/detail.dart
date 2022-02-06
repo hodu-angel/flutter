@@ -334,6 +334,7 @@ class _DetailContentViewState extends State<DetailContentView>
               setState(() {
                 isMyFavoriteContent = !isMyFavoriteContent;
               });
+              //기존 ScaffoldKey가 필요했지만 최신version에선 필요하지않게 되었다.
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
                     isMyFavoriteContent ? '관심목록에 추가됐습니다.' : '관심목록에서 삭제됐습니다.'),
