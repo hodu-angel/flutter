@@ -3,7 +3,7 @@
 https://pub.dev/packages/flutter_secure_storage
 <br>
 
-- 관심등록 클릭시 contentsRepository.addMyFavoritContent(widget.data);으로 저장한다. 
+- 관심등록 클릭시 contentsRepository.addMyFavoritContent(widget.data);으로 저장한다. <br>
 **contents_repository.dart**
 ```
  addMyFavoritContent(Map<String, String>? content){
@@ -14,7 +14,7 @@ https://pub.dev/packages/flutter_secure_storage
 
 <br><br>
 
-- 관심상품등록시 불러오기
+- 관심상품등록시 불러오기 <br>
 **detail.dart**
 ```
  _loadMyFavoriteContentState() async{
