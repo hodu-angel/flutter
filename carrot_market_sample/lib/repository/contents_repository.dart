@@ -1,4 +1,8 @@
-class ContentsRepository {
+import 'package:carrot_market_sample/repository/local_storage_repository.dart';
+
+//LocalStorageRepository를 상속시킴으로써 ContentsRepository class에서도
+//LocalStorageRepository의 데이터들을 모두 참조 할 수있다.
+class ContentsRepository extends LocalStorageRepository{
   Map<String, dynamic> data = {
     "아라동": [
       {
