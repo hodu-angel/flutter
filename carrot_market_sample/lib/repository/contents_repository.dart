@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:carrot_market_sample/repository/local_storage_repository.dart';
 
 //LocalStorageRepository를 상속시킴으로써 ContentsRepository class에서도
 //LocalStorageRepository의 데이터들을 모두 참조 할 수있다.
 class ContentsRepository extends LocalStorageRepository{
+  final String MY_FAVORITE_STORE_KEY = 'MY_FAVORITE_STORE_KEY';
   Map<String, dynamic> data = {
     "아라동": [
       {
@@ -176,5 +179,21 @@ class ContentsRepository extends LocalStorageRepository{
     //1000milli = 1sec
     await Future.delayed(Duration(milliseconds: 1000));
     return data[location];
+  }
+
+  addMyFavoritContent(Map<String, String>? content){
+    //json에 어떻게 string형태로 저장하냐면, jsonEncode()로 자동으로 변환해줘서 저장할 수 있다.
+    this.storeValue(MY_FAVORITE_STORE_KEY, jsonEncode(content));
+  }
+
+  isMyFavoriteContents(String? cid) async{
+    String? jsonString = await this.getStorageValue(MY_FAVORITE_STORE_KEY);
+    if(jsonString != null){
+      Map<String, dynamic> json = jsonDecode(jsonString);
+      return cid == json['cid'];
+      print(json);
+    }else {
+      return null;
+    }
   }
 }

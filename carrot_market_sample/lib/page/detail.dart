@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:carrot_market_sample/components/manor_temperature_widget.dart';
+import 'package:carrot_market_sample/repository/contents_repository.dart';
 import 'package:carrot_market_sample/utils/data_utils..dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +16,7 @@ class DetailContentView extends StatefulWidget {
 
 class _DetailContentViewState extends State<DetailContentView>
     with SingleTickerProviderStateMixin {
+  late ContentsRepository contentsRepository;
   Size? size;
   List<Map<String, String>?>? imgList;
   int? _current;
@@ -33,6 +35,7 @@ class _DetailContentViewState extends State<DetailContentView>
   void initState() {
     super.initState();
     isMyFavoriteContent = false;
+    contentsRepository = ContentsRepository();
     //이 클래스에 animator를 달아주겠다는 것.
     _animationController = AnimationController(vsync: this);
     _colorTween = ColorTween(begin: Colors.white, end: Colors.black)
@@ -50,6 +53,18 @@ class _DetailContentViewState extends State<DetailContentView>
         _animationController.value = scrollpositionToAlpha / 255;
       });
     });
+    _loadMyFavoriteContentState();
+  }
+
+  //불러오기
+  _loadMyFavoriteContentState() async{
+    //내가 좋아하는 contents이면 contents_id를 넘겨줌
+    bool ck = await contentsRepository.isMyFavoriteContents(widget.data!['cid']);
+    //관심상품등록 되어있으면 색 채우게 함
+    setState(() {
+      isMyFavoriteContent = ck;
+    });
+    print(ck);
   }
 
   @override
@@ -331,6 +346,7 @@ class _DetailContentViewState extends State<DetailContentView>
           GestureDetector(
             onTap: () {
               print('관심상품 이벤트 발생');
+              contentsRepository.addMyFavoritContent(widget.data);
               setState(() {
                 isMyFavoriteContent = !isMyFavoriteContent;
               });
