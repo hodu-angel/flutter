@@ -1,7 +1,7 @@
 ## flutter_secure_storage
 관심상품 저장을 위해 사용됨 <br>
 https://pub.dev/packages/flutter_secure_storage
-<br>
+<br><br>
 
 - 관심등록 클릭시 contentsRepository.addMyFavoritContent(widget.data);으로 저장한다. <br>
 **contents_repository.dart**
