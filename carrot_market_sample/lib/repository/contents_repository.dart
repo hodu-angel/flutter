@@ -181,17 +181,32 @@ class ContentsRepository extends LocalStorageRepository{
     return data[location];
   }
 
-  addMyFavoritContent(Map<String, String>? content){
+  addMyFavoritContent(Map<String, String>? content) async{
+    String? jsonString= await this.getStorageValue(MY_FAVORITE_STORE_KEY);
+    List<dynamic> favoriteContentList = jsonDecode(jsonString!);
+    favoriteContentList.add(content);
     //json에 어떻게 string형태로 저장하냐면, jsonEncode()로 자동으로 변환해줘서 저장할 수 있다.
-    this.storeValue(MY_FAVORITE_STORE_KEY, jsonEncode(content));
+    this.storeValue(MY_FAVORITE_STORE_KEY, jsonEncode(favoriteContentList));
   }
 
   isMyFavoriteContents(String? cid) async{
     String? jsonString = await this.getStorageValue(MY_FAVORITE_STORE_KEY);
+    bool isMyFavoritContents = false;
     if(jsonString != null){
-      Map<String, dynamic> json = jsonDecode(jsonString);
-      return cid == json['cid'];
-      print(json);
+      List<dynamic> json = jsonDecode(jsonString);
+      //json이 null또는 List가 아니라면 return false
+      if(json == null || !(json is List)){
+        return false;
+      } else{
+        for(dynamic data in json){
+          if(data['cid'] == cid){
+            isMyFavoritContents = true;
+            break;
+          }
+        }
+      }
+      return isMyFavoritContents;
+     // print(json);
     }else {
       return null;
     }
