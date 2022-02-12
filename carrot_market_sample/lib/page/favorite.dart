@@ -48,7 +48,7 @@ class _MyFavoriteContentsState extends State<MyFavoriteContents> {
         }
 
         return Center(
-          child: Text('해당 지역에 데이터가 없습니다.'),
+          child: Text('관심등록한 물품이 없습니다.'),
         );
       },
     );
