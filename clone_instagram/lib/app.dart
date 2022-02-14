@@ -1,5 +1,5 @@
+import 'package:clone_instagram/components/image_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clone_instagram/components/image_data.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -11,6 +11,14 @@ class App extends StatelessWidget {
         appBar: AppBar(),
         body: Container(),
         bottomNavigationBar: BottomNavigationBar(
+          //선택시 위로 올라가는 것을 고정
+          type: BottomNavigationBarType.fixed,
+          //label 없애기
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          currentIndex: 0,
+          elevation: 0,
+          onTap: (value){},
           items: [
             BottomNavigationBarItem(
               icon: ImageData(IconsPath.homeOff),
@@ -33,10 +41,10 @@ class App extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: Container(
-                width: 50,
-                height: 50,
+                width: 30,
+                height: 30,
                 decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
               ),
               label: 'home',
             ),

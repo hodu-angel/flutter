@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_clone_instagram">
+    package="com.example.clone_instagram">
    <application
-        android:label="flutter_clone_instagram"
+        android:label="clone_instagram"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
