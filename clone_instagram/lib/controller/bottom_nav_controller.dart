@@ -12,16 +12,23 @@ class BottomNavController extends GetxController {
     var page = PageName.values[value];
     switch(page){
       case PageName.HOME:
+        _changePage(value);
         break;
       case PageName.SEARCH:
+        _changePage(value);
         break;
-      case PageName.UPLOAD:
+      case PageName.UPLOAD: //page전환이 아니고 popUp으로 떠야된다.
         break;
       case PageName.ACTIVITY:
+        _changePage(value);
         break;
       case PageName.MYPAGE:
+        _changePage(value);
         break;
     }
+  }
+
+  void _changePage(int value){
     pageIndex(value);
   }
 }
