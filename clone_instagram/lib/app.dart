@@ -64,10 +64,7 @@ class App extends GetView<BottomNavController> {
           ),
         ),
       ),
-      onWillPop: () async {
-        //false이면 닫지 않겠다.
-        return false;
-      },
+      onWillPop: controller.willPopAction,
     );
   }
 }
