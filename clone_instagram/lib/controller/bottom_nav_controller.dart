@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:clone_instagram/components/message_popup.dart';
 import 'package:clone_instagram/pages/upload.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum PageName { HOME, SEARCH, UPLOAD, ACTIVITY, MYPAGE }
@@ -28,10 +32,11 @@ class BottomNavController extends GetxController {
 
   //현재페이지가 List의 마지막에 추가되있는경우 pageIndex를 더이상추가하지않는다.
   //현재페이지가 List의 마지막과 다를경우 pageIndex를 추가한다.
+  //ex) [0, 1, 2, 1, 0]
   void _changePage(int value, {bool hasGesture = true}) {
     pageIndex(value);
     if (!hasGesture) return;
-    if(bottomHistory.last != value){
+    if (bottomHistory.last != value) {
       bottomHistory.add(value);
     }
     // if (bottomHistory.contains(value)) {
@@ -43,6 +48,17 @@ class BottomNavController extends GetxController {
   Future<bool> willPopAction() async {
     if (bottomHistory.length == 1) {
       print('exit!');
+      showDialog(
+          context: Get.context!,
+          builder: (context) => MessagePopup(
+              title: '시스템',
+              message: '종료하시겠습니까?',
+              okCallback: () {
+                exit(0);
+              },
+            cancelCallback: Get.back,
+          ),
+      );
       return true;
     } else {
       print('goto before apge!');
