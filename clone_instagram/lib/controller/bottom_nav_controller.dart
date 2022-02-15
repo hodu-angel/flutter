@@ -26,14 +26,17 @@ class BottomNavController extends GetxController {
     }
   }
 
-  //같은 pageIndex가 포함되어있으면 제거하고 새로 추가한다.
+  //현재페이지가 List의 마지막에 추가되있는경우 pageIndex를 더이상추가하지않는다.
+  //현재페이지가 List의 마지막과 다를경우 pageIndex를 추가한다.
   void _changePage(int value, {bool hasGesture = true}) {
     pageIndex(value);
     if (!hasGesture) return;
-    if (bottomHistory.contains(value)) {
-      bottomHistory.remove(value);
+    if(bottomHistory.last != value){
+      bottomHistory.add(value);
     }
-    bottomHistory.add(value);
+    // if (bottomHistory.contains(value)) {
+    //   bottomHistory.remove(value);
+    // }
     print('addPage ${bottomHistory}');
   }
 
