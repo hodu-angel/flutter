@@ -6,10 +6,40 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   // 내 스토리
-  Widget _myStory(){
+  Widget _myStory() {
     return Stack(
-      
-    )
+      children: [
+        AvatarWidget(
+          type: AvatarType.TYPE2,
+          thumbPath:
+              'https://cdn.pixabay.com/photo/2020/06/02/06/52/cat-5249722__480.jpg',
+          size: 70,
+        ),
+        //+ 영역
+        Positioned(
+            right: 5,
+            bottom: 0,
+            child: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+              child: const Center(
+                child: Text(
+                  '+',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    height: 1.1,
+                  ),
+                ),
+              ),
+            ))
+      ],
+    );
   }
 
   Widget _storyBoardList() {
@@ -17,7 +47,9 @@ class Home extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
+            const SizedBox(width: 20),
             _myStory(),
+            const SizedBox(width: 5),
             //... : List배열을 나열하겠다는 의미
             ...List.generate(
                 100,
