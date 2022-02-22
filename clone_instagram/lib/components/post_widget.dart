@@ -60,6 +60,24 @@ class PostWidget extends StatelessWidget {
     );
   }
 
+  Widget _infoDescription() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch, //컬럼을 꽉차게 하기.
+        children: [
+          Text(
+            '좋아요 150개',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            '콘텐츠 1 입니다.',
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,7 +89,8 @@ class PostWidget extends StatelessWidget {
           _image(),
           const SizedBox(height: 10),
           _infoCount(), //좋아요 영역
-          // _infoDescription(),
+          const SizedBox(height: 5),
+          _infoDescription(),
           // _replyTextBtn(),
           // _dataAgo(), //며칠 전
         ],
