@@ -1,3 +1,4 @@
+import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,10 @@ class Home extends StatelessWidget {
       child: Row(
         children: List.generate(
             100,
-            (index) => Container(
-                  width: 60,
-                  height: 60,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                )),
+            (index) => AvatarWidget(
+                type: AvatarType.TYPE1,
+                thumbPath:
+                    'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_301/3-4-%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg')),
       ),
     );
   }

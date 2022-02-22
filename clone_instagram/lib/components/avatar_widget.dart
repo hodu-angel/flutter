@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 enum AvatarType { TYPE1, TYPE2, TYPE3 }
@@ -22,11 +23,22 @@ class AvatarWidget extends StatelessWidget {
   //type1: 그라데이션 들어감
   Widget type1Widget() {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [Colors.purple, Colors.orange]),
+        shape: BoxShape.circle,
+      ),
+      child: Container(
+        width: 65,
+        height: 65,
+        child: CachedNetworkImage(
+          imageUrl: thumbPath,
+
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
