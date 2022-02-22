@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,33 @@ class PostWidget extends StatelessWidget {
     );
   }
 
+  Widget _image() {
+    return CachedNetworkImage(
+        imageUrl:
+            'https://img.insight.co.kr/static/2021/08/13/700/img_20210813111843_z6yn7ub3.webp');
+  }
+
+  Widget _infoCount() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              ImageData(IconsPath.likeOffIcon, width: 65),
+              const SizedBox(width: 15),
+              ImageData(IconsPath.replyIcon, width: 60),
+              const SizedBox(width: 15),
+              ImageData(IconsPath.directMessage, width: 55),
+            ],
+          ),
+          ImageData(IconsPath.bookMarkOffIcon, width: 50),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,8 +67,10 @@ class PostWidget extends StatelessWidget {
       child: Column(
         children: [
           _header(),
-          // _image(),
-          // _infoCount(), //좋아요 영역
+          const SizedBox(height: 10),
+          _image(),
+          const SizedBox(height: 10),
+          _infoCount(), //좋아요 영역
           // _infoDescription(),
           // _replyTextBtn(),
           // _dataAgo(), //며칠 전
