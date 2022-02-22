@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PostWidget extends StatelessWidget {
@@ -67,20 +68,46 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch, //컬럼을 꽉차게 하기.
         children: [
-          Text(
+          const Text(
             '좋아요 150개',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           //expandable_text library추가하고
           ExpandableText(
-            '컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.',
-            prefixText: 'hodu_angel', //닉네임
-            prefixStyle: TextStyle(fontWeight: FontWeight.bold),
+            '컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.\n',
+            prefixText: 'hodu_angel',
+            //닉네임
+            onPrefixTap: () {
+              print('hodu_angel 페이지 이동');
+            },
+            prefixStyle: const TextStyle(fontWeight: FontWeight.bold),
             expandText: '더보기',
             collapseText: '접기',
-            maxLines: 3,  //3번째줄 부터 접고 펼 수 있다.
+            maxLines: 3,
+            //3번째줄 부터 접고 펼 수 있다.
+            //아래 코드로 반드시 더보기 접기를 클릭하지 않아도 ExpandableText영역을 tap하면 접고 펼 수 있다.
+            expandOnTextTap: true,
+            collapseOnTextTap: true,
+            //더보기 접기 color 변경
+            linkColor: Colors.grey,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _replyTextBtn() {
+    return GestureDetector(
+      onTap: () {},
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        child: Text(
+          '댓글 199개 모두 보기',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 13,
+          ),
+        ),
       ),
     );
   }
@@ -90,6 +117,7 @@ class PostWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _header(),
           const SizedBox(height: 10),
@@ -98,7 +126,8 @@ class PostWidget extends StatelessWidget {
           _infoCount(), //좋아요 영역
           const SizedBox(height: 5),
           _infoDescription(),
-          // _replyTextBtn(),
+          const SizedBox(height: 5),
+          _replyTextBtn(),
           // _dataAgo(), //며칠 전
         ],
       ),
