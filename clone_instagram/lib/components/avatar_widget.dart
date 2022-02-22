@@ -17,13 +17,14 @@ class AvatarWidget extends StatelessWidget {
     required this.thumbPath,
     this.hasStory,
     this.nickname,
-    this.size,
+    this.size = 65,
   }) : super(key: key);
 
   //type1: 그라데이션 들어감
   Widget type1Widget() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -32,12 +33,18 @@ class AvatarWidget extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Container(
-        width: 65,
-        height: 65,
-        child: CachedNetworkImage(
-          imageUrl: thumbPath,
-
-          fit: BoxFit.cover,
+        padding: const EdgeInsets.all(2),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(size!),
+          child: SizedBox(
+            width: size,
+            height: size,
+            child: CachedNetworkImage(
+              imageUrl: thumbPath,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );
