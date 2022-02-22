@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 
 class PostWidget extends StatelessWidget {
@@ -70,8 +71,14 @@ class PostWidget extends StatelessWidget {
             '좋아요 150개',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Text(
-            '콘텐츠 1 입니다.',
+          //expandable_text library추가하고
+          ExpandableText(
+            '컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.',
+            prefixText: 'hodu_angel', //닉네임
+            prefixStyle: TextStyle(fontWeight: FontWeight.bold),
+            expandText: '더보기',
+            collapseText: '접기',
+            maxLines: 3,  //3번째줄 부터 접고 펼 수 있다.
           ),
         ],
       ),
