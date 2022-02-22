@@ -54,6 +54,18 @@ class AvatarWidget extends StatelessWidget {
     );
   }
 
+  Widget type3Widget() {
+    return Row(
+      children: [
+        type1Widget(),
+        Text(
+          nickname ?? '',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //type에 따라 다른위젯을 호출하도록 한다.
@@ -63,7 +75,7 @@ class AvatarWidget extends StatelessWidget {
       case AvatarType.TYPE2:
         return type2Widget();
       case AvatarType.TYPE3:
-        return Container();
+        return type3Widget();
         break;
     }
     return Container();

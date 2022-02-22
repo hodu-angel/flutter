@@ -1,5 +1,6 @@
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
+import 'package:clone_instagram/components/post_widget.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -61,6 +62,13 @@ class Home extends StatelessWidget {
         ));
   }
 
+  Widget _postList(){
+    return Column(
+      children:
+        List.generate(50, (index) => PostWidget()).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +91,7 @@ class Home extends StatelessWidget {
       body: ListView(
         children: [
           _storyBoardList(),
-          //_postList()
+          _postList()
         ],
       ),
     );
