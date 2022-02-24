@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Search extends StatelessWidget {
+class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
+
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  List<List<int>> groupBox = [[], [], []];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Widget _appBar() {
     return Row(
@@ -32,15 +44,81 @@ class Search extends StatelessWidget {
     );
   }
 
+  //3*3으로, 열을 한묶음으로 처리해서 구분한다.
+  Widget _body() {
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  height: 140,
+                  color: Colors.green,
+                ),
+                Container(
+                  height: 140,
+                  color: Colors.blue,
+                ),
+                Container(
+                  height: 140,
+                  color: Colors.orange,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  height: 140,
+                  color: Colors.blue,
+                ),
+                Container(
+                  height: 140,
+                  color: Colors.orange,
+                ),
+                Container(
+                  height: 140,
+                  color: Colors.green,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  height: 140,
+                  color: Colors.orange,
+                ),
+                Container(
+                  height: 140,
+                  color: Colors.green,
+                ),
+                Container(
+                  height: 140,
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea( //SafeArea를 사용하면 상태표시줄을 벗어나지 않게해준다.
+      body: SafeArea(
+        //SafeArea를 사용하면 상태표시줄을 벗어나지 않게해준다.
         child: Column(
           children: [
             //Scaffold의 appBar를 사용하지않으면 body가 상단부분까지 영역을 침범한다.
             _appBar(), //슬라이드시 상단이 사라져야되므로 body에서 만든다.
-            //_body(),
+            Expanded(child: _body()),
           ],
         ),
       ),
