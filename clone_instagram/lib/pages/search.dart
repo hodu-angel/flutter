@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -13,6 +14,10 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
+    for (var i = 0; i < 100; i++) {
+      groupBox[i % 3].add(1); //size를 넣을것임
+    }
+    print('groupBox=>$groupBox');
   }
 
   Widget _appBar() {
@@ -49,62 +54,73 @@ class _SearchState extends State<Search> {
     return SingleChildScrollView(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
+        children: List.generate(
+          groupBox.length,
+          (index) => Expanded(
             child: Column(
-              children: [
-                Container(
-                  height: 140,
+              children: List.generate(
+                groupBox[index].length,
+                (jndex) => Container(
+                  //device의 가로를 3등분해 1size로 둘 것이다.
+                  height: Get.width * 0.33 * groupBox[index][jndex],
                   color: Colors.green,
                 ),
-                Container(
-                  height: 140,
-                  color: Colors.blue,
-                ),
-                Container(
-                  height: 140,
-                  color: Colors.orange,
-                ),
-              ],
+              ).toList(),
             ),
           ),
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  height: 140,
-                  color: Colors.blue,
-                ),
-                Container(
-                  height: 140,
-                  color: Colors.orange,
-                ),
-                Container(
-                  height: 140,
-                  color: Colors.green,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  height: 140,
-                  color: Colors.orange,
-                ),
-                Container(
-                  height: 140,
-                  color: Colors.green,
-                ),
-                Container(
-                  height: 140,
-                  color: Colors.blue,
-                ),
-              ],
-            ),
-          ),
-        ],
+        ).toList(),
+        // children: [
+        //   Expanded(
+        //     child: Column(
+        //       children: [
+        //         Container(
+        //           height: 280,
+        //           color: Colors.green,
+        //         ),
+        //         Container(
+        //           height: 140,
+        //           color: Colors.orange,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        //   Expanded(
+        //     child: Column(
+        //       children: [
+        //         Container(
+        //           height: 140,
+        //           color: Colors.blue,
+        //         ),
+        //         Container(
+        //           height: 140,
+        //           color: Colors.orange,
+        //         ),
+        //         Container(
+        //           height: 140,
+        //           color: Colors.green,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        //   Expanded(
+        //     child: Column(
+        //       children: [
+        //         Container(
+        //           height: 140,
+        //           color: Colors.orange,
+        //         ),
+        //         Container(
+        //           height: 140,
+        //           color: Colors.green,
+        //         ),
+        //         Container(
+        //           height: 140,
+        //           color: Colors.blue,
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ],
       ),
     );
   }
