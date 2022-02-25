@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quiver/iterables.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -11,11 +15,23 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   List<List<int>> groupBox = [[], [], []];
 
+  //각 열마다 사이즈를 누적시킬것임.
+  List<int> groupIndex = [0, 0, 0];
+
   @override
   void initState() {
     super.initState();
+    //gi[1] 은 size가 1이여야 된다. gi[0]과 gi[2]에서 2개씩 묶어 나올 수 있기에.
     for (var i = 0; i < 100; i++) {
-      groupBox[i % 3].add(1); //size를 넣을것임
+      //groupIndex의 값중에서 최소의 값을 가진 index를 순서대로 가져온다.
+      var gi = groupIndex.indexOf(min<int>(groupIndex)!);
+      //print(gi);
+      var size = 1;
+      if (gi != 1) {
+        size = Random().nextInt(100) % 2 == 0 ? 1 : 2;
+      }
+      groupBox[gi].add(size);
+      groupIndex[gi] += size;
     }
     print('groupBox=>$groupBox');
   }
@@ -63,7 +79,18 @@ class _SearchState extends State<Search> {
                 (jndex) => Container(
                   //device의 가로를 3등분해 1size로 둘 것이다.
                   height: Get.width * 0.33 * groupBox[index][jndex],
-                  color: Colors.green,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      //색상들을 랜덤하게 보여준다.
+                      color: Colors.primaries[
+                          Random().nextInt(Colors.primaries.length)]),
+                  //image를 넣어주면 됨
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        'https://images.mypetlife.co.kr/content/uploads/2019/12/09151941/%EA%B6%81%EA%B8%88%ED%95%9C_%EA%B3%A0%EC%96%91%EC%9D%B41.png',
+                    fit: BoxFit.cover,
+                  ),
+                  //color: Colors.green,
                 ),
               ).toList(),
             ),
