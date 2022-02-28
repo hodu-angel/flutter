@@ -21,7 +21,7 @@ class _SearchFocusState extends State<SearchFocus>
     tabController = TabController(length: 5, vsync: this);
   }
 
-  Widget _tabMenuOne(String menu){
+  Widget _tabMenuOne(String menu) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Text(
@@ -58,8 +58,27 @@ class _SearchFocusState extends State<SearchFocus>
     );
   }
 
-  Widget _body(){
-    return Container(color: Colors.green,);
+  Widget _body() {
+    return TabBarView(
+      controller: tabController,
+      children: const [
+        Center(
+          child: Text('인기페이지'),
+        ),
+        Center(
+          child: Text('계정페이지'),
+        ),
+        Center(
+          child: Text('오디오페이지'),
+        ),
+        Center(
+          child: Text('태그페이지'),
+        ),
+        Center(
+          child: Text('장소페이지'),
+        ),
+      ],
+    );
   }
 
   @override
