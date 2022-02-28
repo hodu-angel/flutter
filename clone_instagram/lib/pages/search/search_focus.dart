@@ -21,40 +21,45 @@ class _SearchFocusState extends State<SearchFocus>
     tabController = TabController(length: 5, vsync: this);
   }
 
+  Widget _tabMenuOne(String menu){
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        menu,
+        style: const TextStyle(fontSize: 15, color: Colors.black),
+      ),
+    );
+  }
+
   PreferredSizeWidget _tabMenu() {
     return PreferredSize(
       child: Container(
         height: 50,
         width: Size.infinite.width, //전체Size
+        decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(color: Color(0xffe4e4e4)))),
         //TabBar는 controller를 필요로 한다.
         //TabController의 length가 5이므로 5개보다 적거나 많으면 error발생
-        child: TabBar(controller: tabController, tabs: const [
-          Text(
-            '인기',
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-          Text(
-            '계정',
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-          Text(
-            '오디오',
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-          Text(
-            '태그',
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-          Text(
-            '장소',
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-        ]),
+        child: TabBar(
+            controller: tabController,
+            //해당 tab 밑줄 color 변경
+            indicatorColor: Colors.black,
+            tabs: [
+              _tabMenuOne('인기'),
+              _tabMenuOne('계정'),
+              _tabMenuOne('오디오'),
+              _tabMenuOne('태그'),
+              _tabMenuOne('장소'),
+            ]),
       ),
       //Size.fromHeight(50): 50만큼 떨어지고 밑에 붙는 것이다.
       //AppBar().preferredSize.height: device의 AppBar의 높이만큼 사이즈.
       preferredSize: Size.fromHeight(AppBar().preferredSize.height),
     );
+  }
+
+  Widget _body(){
+    return Container(color: Colors.green,);
   }
 
   @override
@@ -91,11 +96,7 @@ class _SearchFocusState extends State<SearchFocus>
         //appbar처럼 height가 지정되어있는것을 넣어줘야 된다.
         bottom: _tabMenu(),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [],
-        ),
-      ),
+      body: _body(),
     );
   }
 }
