@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clone_instagram/pages/search/search_focus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quiver/iterables.dart';
@@ -40,20 +41,25 @@ class _SearchState extends State<Search> {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(left: 10),
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                color: const Color(0xffefefef)),
-            child: Row(
-              children: const [
-                Icon(Icons.search),
-                Text(
-                  '검색',
-                  style: TextStyle(fontSize: 15, color: Color(0xff838383)),
-                ),
-              ],
+          child: GestureDetector(
+            onTap: () {
+              Get.to(SearchFocus());
+            },
+            child: Container(
+              margin: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: const Color(0xffefefef)),
+              child: Row(
+                children: const [
+                  Icon(Icons.search),
+                  Text(
+                    '검색',
+                    style: TextStyle(fontSize: 15, color: Color(0xff838383)),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -72,29 +78,31 @@ class _SearchState extends State<Search> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
           groupBox.length,
-          (index) => Expanded(
-            child: Column(
-              children: List.generate(
-                groupBox[index].length,
-                (jndex) => Container(
-                  //device의 가로를 3등분해 1size로 둘 것이다.
-                  height: Get.width * 0.33 * groupBox[index][jndex],
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      //색상들을 랜덤하게 보여준다.
-                      color: Colors.primaries[
-                          Random().nextInt(Colors.primaries.length)]),
-                  //image를 넣어주면 됨
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        'https://images.mypetlife.co.kr/content/uploads/2019/12/09151941/%EA%B6%81%EA%B8%88%ED%95%9C_%EA%B3%A0%EC%96%91%EC%9D%B41.png',
-                    fit: BoxFit.cover,
-                  ),
-                  //color: Colors.green,
+              (index) =>
+              Expanded(
+                child: Column(
+                  children: List.generate(
+                    groupBox[index].length,
+                        (jndex) =>
+                        Container(
+                          //device의 가로를 3등분해 1size로 둘 것이다.
+                          height: Get.width * 0.33 * groupBox[index][jndex],
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              //색상들을 랜덤하게 보여준다.
+                              color: Colors.primaries[
+                              Random().nextInt(Colors.primaries.length)]),
+                          //image를 넣어주면 됨
+                          child: CachedNetworkImage(
+                            imageUrl:
+                            'https://images.mypetlife.co.kr/content/uploads/2019/12/09151941/%EA%B6%81%EA%B8%88%ED%95%9C_%EA%B3%A0%EC%96%91%EC%9D%B41.png',
+                            fit: BoxFit.cover,
+                          ),
+                          //color: Colors.green,
+                        ),
+                  ).toList(),
                 ),
-              ).toList(),
-            ),
-          ),
+              ),
         ).toList(),
         // children: [
         //   Expanded(
