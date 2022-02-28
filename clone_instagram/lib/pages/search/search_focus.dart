@@ -10,7 +10,15 @@ class SearchFocus extends StatefulWidget {
 }
 
 //뒤로가기버튼, 검색부분, Tapdrawable 해당페이지 보여주는 탭 슬라이드 구현
-class _SearchFocusState extends State<SearchFocus> {
+class _SearchFocusState extends State<SearchFocus> with TickerProviderStateMixin{
+  late TabController tabController;
+  @override
+  void initState() {
+    super.initState();
+    //this를 사용하기 위해서 with TickerProviderStateMixin을 해줘야 된다.
+    tabController = TabController(length: 5, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +49,46 @@ class _SearchFocusState extends State<SearchFocus> {
                 isDense: true),
           ),
         ),
+
+        //appbar처럼 height가 지정되어있는것을 넣어줘야 된다.
+        bottom: PreferredSize(
+          child: Container(
+            height: 50,
+            width: Size.infinite.width, //전체Size
+            color: Colors.orange,
+            //TabBar는 controller를 필요로 한다.
+            //TabController의 length가 5이므로 5개보다 적거나 많으면 error발생
+            child: TabBar(controller: tabController,tabs: const [
+              Text(
+                '인기',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              Text(
+                '인기',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              Text(
+                '인기',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              Text(
+                '인기',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              Text(
+                '인기',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ]),
+          ),
+          //Size.fromHeight(50): 50만큼 떨어지고 밑에 붙는 것이다.
+          //AppBar().preferredSize.height: device의 AppBar의 높이만큼 사이즈.
+          preferredSize: Size.fromHeight(AppBar().preferredSize.height),
+        ),
       ),
       body: SafeArea(
         child: Column(
-          children: [
-          ],
+          children: [],
         ),
       ),
     );
