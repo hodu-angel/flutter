@@ -17,12 +17,24 @@ class App extends GetView<BottomNavController> {
             index: controller.pageIndex.value,
             children: [
               const Home(),
-              //Container(child: Center(child: Text('HOME')),),
+              Navigator(
+                key: controller.searchPageNaviationKey,
+                onGenerateRoute: (routeSetting) {
+                  return MaterialPageRoute(
+                    builder: (context) => const Search(),
+                  );
+                },
+              ),
               const Search(),
-              //Container(child: Center(child: Text('SEARCH')),),
-              Container(child: Center(child: Text('UPLOADE')),),
-              Container(child: Center(child: Text('ACTIVITY')),),
-              Container(child: Center(child: Text('MYPAGE')),),
+              Container(
+                child: Center(child: Text('UPLOADE')),
+              ),
+              Container(
+                child: Center(child: Text('ACTIVITY')),
+              ),
+              Container(
+                child: Center(child: Text('MYPAGE')),
+              ),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

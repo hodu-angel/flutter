@@ -10,6 +10,7 @@ enum PageName { HOME, SEARCH, UPLOAD, ACTIVITY, MYPAGE }
 //bottom에 있는 pageIndex를 관리할 것임
 class BottomNavController extends GetxController {
   RxInt pageIndex = 0.obs;
+  GlobalKey<NavigatorState> searchPageNaviationKey = GlobalKey<NavigatorState>();
   List<int> bottomHistory = [0]; //검색이나 다른버튼을 누르고 뒤로가기시 홈으로 가게하기 위함
 
   //pageIndex에 각 해당하는 event처리를 여기 method에서 함

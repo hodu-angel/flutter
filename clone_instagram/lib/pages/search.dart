@@ -43,7 +43,10 @@ class _SearchState extends State<Search> {
         Expanded(
           child: GestureDetector(
             onTap: () {
-              Get.to(SearchFocus());
+              //Navigator처리를 해주면 Get.to를 사용해선 안된다.
+              //Get.to(SearchFocus());
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => SearchFocus()));
             },
             child: Container(
               margin: const EdgeInsets.only(left: 10),
@@ -94,8 +97,7 @@ class _SearchState extends State<Search> {
                               Random().nextInt(Colors.primaries.length)]),
                           //image를 넣어주면 됨
                           child: CachedNetworkImage(
-                            imageUrl:
-                            'https://images.mypetlife.co.kr/content/uploads/2019/12/09151941/%EA%B6%81%EA%B8%88%ED%95%9C_%EA%B3%A0%EC%96%91%EC%9D%B41.png',
+                            imageUrl: 'https://s3.ap-northeast-2.amazonaws.com/elasticbeanstalk-ap-northeast-2-176213403491/media/magazine_img/magazine_270/%EC%8D%B8%EB%84%A4%EC%9D%BC.jpg',
                             fit: BoxFit.cover,
                           ),
                           //color: Colors.green,
