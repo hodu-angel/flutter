@@ -9,6 +9,7 @@ enum PageName { HOME, SEARCH, UPLOAD, ACTIVITY, MYPAGE }
 
 //bottom에 있는 pageIndex를 관리할 것임
 class BottomNavController extends GetxController {
+  static BottomNavController get to => Get.find();
   RxInt pageIndex = 0.obs;
   GlobalKey<NavigatorState> searchPageNaviationKey = GlobalKey<NavigatorState>();
   List<int> bottomHistory = [0]; //검색이나 다른버튼을 누르고 뒤로가기시 홈으로 가게하기 위함
@@ -62,6 +63,18 @@ class BottomNavController extends GetxController {
       );
       return true;
     } else {
+
+      var page = PageName.values[bottomHistory.last];
+      if(page == PageName.SEARCH){
+        //pop할것이 있는지 없는지 check해준다. 있으면 true, 없으면 false
+        var value = await searchPageNaviationKey.currentState!.maybePop();
+        if(value) return false;
+
+      }
+
+
+
+
       print('goto before apge!');
       bottomHistory.removeLast();
       //제거됐으면 changeBottomNav로 보내서 페이지전환되게 한다.

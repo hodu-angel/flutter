@@ -45,6 +45,8 @@ class _SearchState extends State<Search> {
             onTap: () {
               //Navigator처리를 해주면 Get.to를 사용해선 안된다.
               //Get.to(SearchFocus());
+              //기존의 Get.to는 밑의 bottomNavi가 살아있지않았는데,
+              //Get.to에서 Navigator로 바꿈으로써 bottomNavi를 살아있게 했다.
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) => SearchFocus()));
             },
