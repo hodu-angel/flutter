@@ -58,12 +58,13 @@ class Upload extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 5,),
+              const SizedBox(
+                width: 5,
+              ),
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Color(0xff808080)
-                ),
+                    shape: BoxShape.circle, color: Color(0xff808080)),
                 child: ImageData(IconsPath.cameraIcon),
               ),
             ],
@@ -71,6 +72,28 @@ class Upload extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  //SingleChildScrollView와 GridView가 같이 사용되면 오류가 발생한다.
+  //그래서 GridView에서 scroll을 지원하지 않는 방식으로 했다.
+  Widget _imageSelectList() {
+    return GridView.builder(
+      //scroll을 하지 않겠다.
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      //SliverGridDelegateWithFixedCrossAxisCount: 몇단계로 쪼갤 것인지.
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+        mainAxisSpacing: 1,
+        crossAxisSpacing: 1,
+        //childAspectRatio: 정사각형의 size가 나온다.
+        childAspectRatio: 1),
+        itemCount: 100,
+        itemBuilder: (BuildContext context, int index){
+          return Container(
+            color: Colors.orange,
+          );
+        });
   }
 
   @override
@@ -113,7 +136,7 @@ class Upload extends StatelessWidget {
           children: [
             _imagePreview(),
             _header(),
-            // _imageSelectList(),
+            _imageSelectList(),
           ],
         ),
       ),
