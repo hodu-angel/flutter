@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:clone_instagram/components/image_data.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -13,6 +15,7 @@ class Upload extends StatefulWidget {
 
 class _UploadState extends State<Upload> {
   var albums = <AssetPathEntity>[];
+  var imageList = <AssetEntity>[];
   var headerTitle = '';
 
   @override
@@ -41,9 +44,20 @@ class _UploadState extends State<Upload> {
     } else {}
   }
 
-  void _loadData() {
+  void _loadData() async {
     headerTitle = albums.first.name;
+    await _pagingPhotos();
+    update();
   }
+
+  Future<void> _pagingPhotos() async {
+    //pageSize: 몇장을 불러올 것인지.
+    var photos = await albums.first.getAssetListPaged(0, 30);
+    imageList.addAll(photos);
+  }
+
+  //매번 update를 해야되기에 축약함
+  void update() => setState(() {});
 
   Widget _imagePreview() {
     var width = MediaQuery.of(context).size.width;
@@ -126,12 +140,23 @@ class _UploadState extends State<Upload> {
             crossAxisSpacing: 1,
             //childAspectRatio: 정사각형의 size가 나온다.
             childAspectRatio: 1),
-        itemCount: 100,
+        itemCount: imageList.length,
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            color: Colors.orange,
-          );
+          return _photoWidget(imageList[index]);
         });
+  }
+
+  Widget _photoWidget(AssetEntity asset) {
+    return FutureBuilder(
+      future: asset.thumbDataWithSize(200, 200),
+      builder: (_, AsyncSnapshot<Uint8List?> snapshot) {
+        if (snapshot.hasData) {
+          return Image.memory(snapshot.data!, fit: BoxFit.cover,);
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 
   @override
