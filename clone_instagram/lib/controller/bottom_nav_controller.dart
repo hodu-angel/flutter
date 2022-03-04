@@ -73,8 +73,6 @@ class BottomNavController extends GetxController {
       }
 
 
-
-
       print('goto before apge!');
       bottomHistory.removeLast();
       //제거됐으면 changeBottomNav로 보내서 페이지전환되게 한다.
