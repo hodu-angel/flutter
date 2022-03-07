@@ -97,11 +97,14 @@ class _UploadState extends State<Upload> {
                       topRight: Radius.circular(20)),
                 ),
                 //height를 주지 않아도 끝까지 확장되어 보여준다.
-                isScrollControlled: true,
+                isScrollControlled: albums.length > 10 ? true : false,
                 //gallery_name이 많으면 SafeArea까지 영역을 침범하게되어 스크롤이 안 될 수 있으므로 top영역을 빼준값을 maxHeight로 지정한다.
-                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height-MediaQuery.of(context).padding.top),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top,
+                ),
                 builder: (_) => Container(
-                  //height: 200,
+                  //height: albums.length * 70,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -120,12 +123,12 @@ class _UploadState extends State<Upload> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: List.generate(
-                              //albums.length,
-                              100,
+                              albums.length,
+                              //100,
                               (index) => Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 20),
-                                child: Text('albums[index].name'),
+                                child: Text(albums[index].name),
                               ),
                             ),
                           ),
