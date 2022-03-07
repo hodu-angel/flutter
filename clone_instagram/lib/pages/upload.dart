@@ -17,6 +17,7 @@ class _UploadState extends State<Upload> {
   var albums = <AssetPathEntity>[];
   var imageList = <AssetEntity>[];
   var headerTitle = '';
+  AssetEntity? selectedImage;
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _UploadState extends State<Upload> {
     //pageSize: 몇장을 불러올 것인지.
     var photos = await albums.first.getAssetListPaged(0, 30);
     imageList.addAll(photos);
+    selectedImage = imageList.first;
   }
 
   //매번 update를 해야되기에 축약함
@@ -65,6 +67,9 @@ class _UploadState extends State<Upload> {
       width: width,
       height: width,
       color: Colors.green,
+      child: selectedImage == null
+          ? Container()
+          : _photoWidget(selectedImage!, width.toInt()),
     );
   }
 
@@ -142,16 +147,19 @@ class _UploadState extends State<Upload> {
             childAspectRatio: 1),
         itemCount: imageList.length,
         itemBuilder: (BuildContext context, int index) {
-          return _photoWidget(imageList[index]);
+          return _photoWidget(imageList[index], 200);
         });
   }
 
-  Widget _photoWidget(AssetEntity asset) {
+  Widget _photoWidget(AssetEntity asset, int size) {
     return FutureBuilder(
-      future: asset.thumbDataWithSize(200, 200),
+      future: asset.thumbDataWithSize(size, size),
       builder: (_, AsyncSnapshot<Uint8List?> snapshot) {
         if (snapshot.hasData) {
-          return Image.memory(snapshot.data!, fit: BoxFit.cover,);
+          return Image.memory(
+            snapshot.data!,
+            fit: BoxFit.cover,
+          );
         } else {
           return Container();
         }
