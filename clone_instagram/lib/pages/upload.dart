@@ -6,6 +6,7 @@ import 'package:photo_manager/photo_manager.dart';
 
 //내 device의 folder group을 그대로 불러들여서 뿌려주게 할 것임
 //의존성을 줄이기 위해 stless Getx에서 statefulWidget을 사용함
+//StatefulWidget의 특성상 builder가 재호출되게 된다. 그러므로 _imageSelectList에서 이미지변경시 전체가 reload된다.
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
 
@@ -85,16 +86,67 @@ class _UploadState extends State<Upload> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //앞 row
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              children: [
-                Text(
-                  headerTitle,
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
+          GestureDetector(
+            onTap: () {
+              //showModalBottomSheet는 default로 backgroundColor가 white다.
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                 ),
-                Icon(Icons.arrow_drop_down),
-              ],
+                //height를 주지 않아도 끝까지 확장되어 보여준다.
+                isScrollControlled: true,
+                //gallery_name이 많으면 SafeArea까지 영역을 침범하게되어 스크롤이 안 될 수 있으므로 top영역을 빼준값을 maxHeight로 지정한다.
+                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height-MediaQuery.of(context).padding.top),
+                builder: (_) => Container(
+                  //height: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 7),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.black54),
+                          width: 40,
+                          height: 4,
+                        ),
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: List.generate(
+                              //albums.length,
+                              100,
+                              (index) => Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 20),
+                                child: Text('albums[index].name'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: [
+                  Text(
+                    headerTitle,
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                  Icon(Icons.arrow_drop_down),
+                ],
+              ),
             ),
           ),
           Row(
@@ -154,7 +206,7 @@ class _UploadState extends State<Upload> {
         itemBuilder: (BuildContext context, int index) {
           return _photoWidget(imageList[index], 200, builder: (data) {
             return GestureDetector(
-              onTap: (){
+              onTap: () {
                 selectedImage = imageList[index];
                 update();
               },
