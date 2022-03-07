@@ -66,7 +66,7 @@ class _UploadState extends State<Upload> {
     return Container(
       width: width,
       height: width,
-      color: Colors.green,
+      color: Colors.grey,
       child: selectedImage == null
           ? Container()
           : _photoWidget(selectedImage!, width.toInt(), builder: (data) {
@@ -153,11 +153,17 @@ class _UploadState extends State<Upload> {
         itemCount: imageList.length,
         itemBuilder: (BuildContext context, int index) {
           return _photoWidget(imageList[index], 200, builder: (data) {
-            return Opacity(
-              opacity: imageList[index] == selectedImage ? 0.3 : 1,
-              child: Image.memory(
-                data,
-                fit: BoxFit.cover,
+            return GestureDetector(
+              onTap: (){
+                selectedImage = imageList[index];
+                update();
+              },
+              child: Opacity(
+                opacity: imageList[index] == selectedImage ? 0.3 : 1,
+                child: Image.memory(
+                  data,
+                  fit: BoxFit.cover,
+                ),
               ),
             );
           });
