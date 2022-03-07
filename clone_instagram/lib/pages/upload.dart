@@ -69,7 +69,12 @@ class _UploadState extends State<Upload> {
       color: Colors.green,
       child: selectedImage == null
           ? Container()
-          : _photoWidget(selectedImage!, width.toInt()),
+          : _photoWidget(selectedImage!, width.toInt(), builder: (data) {
+              return Image.memory(
+                data,
+                fit: BoxFit.cover,
+              );
+            }),
     );
   }
 
@@ -147,19 +152,26 @@ class _UploadState extends State<Upload> {
             childAspectRatio: 1),
         itemCount: imageList.length,
         itemBuilder: (BuildContext context, int index) {
-          return _photoWidget(imageList[index], 200);
+          return _photoWidget(imageList[index], 200, builder: (data) {
+            return Opacity(
+              opacity: imageList[index] == selectedImage ? 0.3 : 1,
+              child: Image.memory(
+                data,
+                fit: BoxFit.cover,
+              ),
+            );
+          });
         });
   }
 
-  Widget _photoWidget(AssetEntity asset, int size) {
+  //asset과 selectedImage가 동일하다면 하얗게 표시해준다.
+  Widget _photoWidget(AssetEntity asset, int size,
+      {required Widget Function(Uint8List) builder}) {
     return FutureBuilder(
       future: asset.thumbDataWithSize(size, size),
       builder: (_, AsyncSnapshot<Uint8List?> snapshot) {
         if (snapshot.hasData) {
-          return Image.memory(
-            snapshot.data!,
-            fit: BoxFit.cover,
-          );
+          return builder(snapshot.data!);
         } else {
           return Container();
         }
