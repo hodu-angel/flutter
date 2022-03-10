@@ -2,6 +2,7 @@ import 'package:clone_instagram/components/image_data.dart';
 import 'package:clone_instagram/controller/bottom_nav_controller.dart';
 import 'package:clone_instagram/pages/active_history.dart';
 import 'package:clone_instagram/pages/home.dart';
+import 'package:clone_instagram/pages/mypage.dart';
 import 'package:clone_instagram/pages/search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,18 +27,10 @@ class App extends GetView<BottomNavController> {
                   );
                 },
               ),
-              // Container(
-              //   child: Center(child: Text('UPLOADE')),
-              // ),
               //필요는 없지만 bottomIndex에 매칭이 되어야 하기 때문에 빈 Container를 넣어준다.
               Container(),
               const ActiveHistory(),
-              Container(
-                child: Center(child: Text('ACTIVITY')),
-              ),
-              Container(
-                child: Center(child: Text('MYPAGE')),
-              ),
+              const MyPage(),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
