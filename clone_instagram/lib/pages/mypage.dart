@@ -23,11 +23,12 @@ class MyPage extends StatelessWidget {
   }
 
   Widget _information() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
             children: [
               AvatarWidget(
                 type: AvatarType.TYPE2,
@@ -48,8 +49,16 @@ class MyPage extends StatelessWidget {
               )
             ],
           ),
-        )
-      ],
+          const SizedBox(height: 10),
+          const Text(
+            '안녕하세요 hodu_angel입니다. 저랑 친구가 되어주세요.',
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.black,
+            ),
+          )
+        ],
+      ),
     );
   }
 
