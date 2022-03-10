@@ -1,5 +1,6 @@
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
+import 'package:clone_instagram/components/user_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +65,7 @@ class MyPage extends StatelessWidget {
 
   Widget _menu() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: Row(
         children: [
           Expanded(
@@ -101,6 +102,49 @@ class MyPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _discorverPeople() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                'Discorver People',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.black,
+                ),
+              ),
+              Text(
+                'See All',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  color: Colors.blue,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          //기본적으로 세로방향 scroll이기 때문에 가로방향을 지정해준다.
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            children: List.generate(
+              10,
+              (index) => UserCard(
+                  userId: 'Soo${index}', description: 'Soo${index}님이 팔로우 합니다.'),
+            ).toList(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -143,6 +187,7 @@ class MyPage extends StatelessWidget {
           children: [
             _information(),
             _menu(),
+            _discorverPeople(),
           ],
         ),
       ),
