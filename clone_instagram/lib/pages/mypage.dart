@@ -1,11 +1,23 @@
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
 import 'package:clone_instagram/components/user_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
+
+  @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
 
   Widget _statisticsOne(String title, int value) {
     return Column(
@@ -148,6 +160,28 @@ class MyPage extends StatelessWidget {
     );
   }
 
+  Widget _tabMenu() {
+    return TabBar(
+      controller: tabController,
+      indicatorColor: Colors.black,
+      indicatorWeight: 2,
+      tabs: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: ImageData(
+            IconsPath.gridViewOn,
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: ImageData(
+            IconsPath.myTagImageOff,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,6 +222,9 @@ class MyPage extends StatelessWidget {
             _information(),
             _menu(),
             _discorverPeople(),
+            const SizedBox(height: 20),
+            _tabMenu(),
+
           ],
         ),
       ),
