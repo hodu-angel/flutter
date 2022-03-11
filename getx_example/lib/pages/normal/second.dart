@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_example/home.dart';
 
 class SecondPage extends StatelessWidget {
   const SecondPage({Key? key}) : super(key: key);
@@ -16,14 +17,17 @@ class SecondPage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: Get.back,
-                  //기존방식
+              //기존방식
               //     () {
               //   Navigator.pop(context);
               // },
               child: const Text('뒤로 이동'),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Get.to(const Home());
+                Get.offAll(const Home());
+              },
               child: const Text('홈 이동'),
             ),
           ],
