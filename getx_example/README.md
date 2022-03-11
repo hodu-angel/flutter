@@ -1,7 +1,7 @@
 # GetX
-> Flutter 개발을 위한 매우 가볍고 강력한 라이브러리이다.
-> 소스관리가 편리하고 clean하다.
-> context에 대한 접근이 필요없다.
+> Flutter 개발을 위한 매우 가볍고 강력한 라이브러리이다. <br>
+> 소스관리가 편리하고 clean하다. <br>
+> context에 대한 접근이 필요없다. <br>
 
 ---
 
@@ -21,11 +21,11 @@
 
 - 기존 코드와의 차이점
 MaterialApp => GetMaterialApp
-> 단순 상태관리만 할 것이라면 MaterialApp을 사용해도 무관하지만.
-> GetMaterialApp에서의 주요기능 2가지를 사용하려면 이를 사용한다.
+> 단순 상태관리만 할 것이라면 MaterialApp을 사용해도 무관하지만, <br>
+> GetMaterialApp에서의 주요기능 2가지를 사용하려면 이를 사용한다. <br>
 
 <br><br>
 
 - GetX 사용을 위한 Setting
-> https://pub.dev/packages/get/install
-> terminal -> flutter pub add get
+> https://pub.dev/packages/get/install <br>
+> terminal -> flutter pub add get <br>
