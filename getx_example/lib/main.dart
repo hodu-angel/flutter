@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
               primary: Colors.white38, onPrimary: Colors.black),
         ),
       ),
-      home: const Home(),
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => const Home(),
+      },
     );
   }
 }
