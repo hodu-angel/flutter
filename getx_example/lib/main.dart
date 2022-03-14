@@ -21,6 +21,10 @@ class MyApp extends StatelessWidget {
           titleTextStyle: TextStyle(color: Colors.black),
           iconTheme: IconThemeData(color: Colors.black),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              primary: Colors.white38, onPrimary: Colors.black),
+        ),
       ),
       home: const Home(),
     );

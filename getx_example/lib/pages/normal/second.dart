@@ -27,6 +27,10 @@ class SecondPage extends StatelessWidget {
               onPressed: () {
                 // Get.to(const Home());
                 Get.offAll(const Home());
+                //Get.offAll 과 같은 효과를 내는 Navigator.pushAndRemoveUntil
+                Navigator.pushAndRemoveUntil(
+                    context, MaterialPageRoute(builder: (_) => const Home() ), (
+                    route) => false);
               },
               child: const Text('홈 이동'),
             ),
