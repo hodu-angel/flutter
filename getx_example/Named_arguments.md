@@ -12,6 +12,8 @@ getPages: [
 ```
 onTap: (){
     Get.toNamed('/user/1004');
+    //또는
+    Get.toNamed('/user/1004?name=hodu&age=21');
 }
 ```
 <br>
@@ -20,13 +22,17 @@ onTap: (){
 ```
 ...
 Text('${Get.parameters['uid']}'),
+//또는
+Text('${Get.parameters['name']}'),
+Text('${Get,parameters['age']}'),
 ```
+<br>
 
 ---
 
 <br>
 
-> 여러 값 전달
+> arguments 전달
 - home.dart
 ```
 onTap: (){
@@ -39,6 +45,7 @@ onTap: (){
 ```
 Text('${Get.arguments['name']} : ${Get.arguments['age'}'),
 ```
+<br>
 
 ---
 
