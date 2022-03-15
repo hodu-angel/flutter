@@ -17,14 +17,16 @@ class Home extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                //기존소스
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (_) => const FirstPage()),
-                // );
                 Get.to(const FirstPage());
               },
               child: const Text('일반적인 라우트'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/first');
+                //Navigator.pushNamed(context, '/first');
+              },
+              child: const Text('Named 라우트'),
             ),
           ],
         ),

@@ -21,6 +21,7 @@ class SecondNamedPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                Get.offAllNamed('/');
               },
               child: const Text('홈 이동'),
             ),
