@@ -28,9 +28,30 @@ class Home extends StatelessWidget {
               },
               child: const Text('Named 라우트'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                //Get.toNamed('/next', arguments: {'name':'hodu', 'age': '20'});
+                Get.toNamed('/next', arguments: User(name: 'hodu', age: 20));
+                //Get.to(const FirstPage(), arguments: 'hodu');
+              },
+              child: const Text('Arguments 전달'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/user/1004');
+              },
+              child: const Text('동적 url 전달'),
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+class User {
+  String? name;
+  int? age;
+
+  User({this.name, this.age});
 }

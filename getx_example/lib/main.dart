@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:getx_example/home.dart';
 import 'package:getx_example/pages/named/first.dart';
 import 'package:getx_example/pages/named/second.dart';
+import 'package:getx_example/pages/next.dart';
+import 'package:getx_example/pages/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,9 +38,12 @@ class MyApp extends StatelessWidget {
       //   '/second' : (context) => const SecondNamedPage(),
       // },
       getPages: [
-        GetPage(name: '/', page: ()=> const Home()),
-        GetPage(name: '/first', page: ()=> const FirstNamedPage()),
-        GetPage(name: '/second', page: ()=> const SecondNamedPage()),
+        //transition: 화면 전환시 애니메이션
+        GetPage(name: '/', page: ()=> const Home(), transition: Transition.zoom),
+        GetPage(name: '/first', page: ()=> const FirstNamedPage(), transition: Transition.zoom),
+        GetPage(name: '/second', page: ()=> const SecondNamedPage(), transition: Transition.zoom),
+        GetPage(name: '/next', page: ()=> const NextPage(), transition: Transition.zoom),
+        GetPage(name: '/user/:uid', page: ()=>const UserPage(), transition: Transition.downToUp),
       ],
     );
   }
