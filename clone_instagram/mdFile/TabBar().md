@@ -17,6 +17,19 @@ class _SearchFocusState extends State<SearchFocus>
     tabController = TabController(length: 5, vsync: this);
   }
   
+  Widget _body(){
+      return TabBarView(
+        controller: tabController,
+        children: const [
+            Center( child: Text('인기페이지') ),
+            Center( child: Text('계정페이지') ),
+            Center( child: Text('오디오페이지') ),
+            Center( child: Text('태그페이지') ),
+            Center( child: Text('장소페이지') ),
+        ],
+      );
+  }
+  
   //임의의 data
   Widget _tabMenuOne(String menu) {
     return Padding(
