@@ -22,6 +22,8 @@
 3. git에 'dart pub global activate flutterfire_cil'를 설치하면 global하게 명령어를 사용할 수 있다. <br><br>
 4. 이제 'flutterfire configure' 로 사용하면 된다. <br><br>
 
+---
+
 - main.dart
 ```
 void main() async {
