@@ -1,3 +1,4 @@
+import 'package:clone_instagram/controller/auth_controller.dart';
 import 'package:clone_instagram/controller/bottom_nav_controller.dart';
 import 'package:get/get.dart';
 
@@ -7,5 +8,6 @@ class InitBinding extends Bindings{
   void dependencies(){
     //앱종료시까지 instance가 계속 살아있게 한다.
     Get.put(BottomNavController(), permanent: true);
+    Get.put(AuthController(), permanent: true);
   }
 }
