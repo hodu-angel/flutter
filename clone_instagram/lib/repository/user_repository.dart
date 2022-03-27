@@ -1,7 +1,8 @@
+import 'package:clone_instagram/models/instagram_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository {
-  static Future<bool?> loginUserByUid(String uid) async {
+  static Future<IUser?> loginUserByUid(String uid) async {
     print(uid);
     //users라는 컬렉션을 통해서 조회한다.
     var data = await FirebaseFirestore.instance
@@ -12,9 +13,8 @@ class UserRepository {
     if (data.size == 0) {
       return null;
     } else {
-      //first.data() 하는이유는 uid만 찍어볼것이기 때문에 uid는 고유하기때문에 하나 나올것이므로
-      print(data.docs.first.data());
-      return true;
+      //first.data() 하는이유는 uid만 찍어볼것이기 때문에 uid는 고유하기 때문에 하나 나올것이므로
+      return IUser.fromJson(data.docs.first.data());
     }
   }
 }
