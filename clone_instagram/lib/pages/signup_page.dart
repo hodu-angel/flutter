@@ -38,6 +38,18 @@ class SignupPage extends StatelessWidget {
     );
   }
 
+  Widget _description() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      child: TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(10),
+          hintText: '설명',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +72,16 @@ class SignupPage extends StatelessWidget {
             _avatar(),
             const SizedBox(height: 30),
             _nickname(),
+            const SizedBox(height: 30),
+            _description(),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+        child: ElevatedButton(
+          onPressed: () {},
+          child: const Text('회원가입'),
         ),
       ),
     );
