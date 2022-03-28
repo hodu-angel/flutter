@@ -16,6 +16,9 @@ class AuthController extends GetxController {
   Future<IUser?> loginUser(String uid) async {
     //DB 조회
     var userData = await UserRepository.loginUserByUid(uid);
+    if(userData != null){
+      user(userData);
+    }
     return userData;
   }
 
@@ -54,7 +57,7 @@ class AuthController extends GetxController {
     var result = await UserRepository.signup(signupUser);
     if (result) {
       //로그인 성공
-      user(signupUser);
+      loginUser(signupUser.uid!);
     }
   }
 }

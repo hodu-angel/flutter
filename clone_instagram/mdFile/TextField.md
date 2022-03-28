@@ -5,8 +5,12 @@
 <br><br>
 
 ```
+class _SignupPageState extends State<SignupPage>{
+    TextEditingController contentController = TextEditingController();
+
 ...
 child: const TextField(
+    controller: contentController,
     decoration: InputDecoration(
         border: InputBorder.none,
         hintText: 'content',
@@ -14,4 +18,10 @@ child: const TextField(
         isDense: true,
     ),
 ),
+```
+<br><br>
+
+- 입력받은 값 받아오기
+```
+contentController.text
 ```
