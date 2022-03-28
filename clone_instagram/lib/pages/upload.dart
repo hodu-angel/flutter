@@ -148,7 +148,7 @@ class _UploadState extends State<Upload> {
                     headerTitle,
                     style: const TextStyle(color: Colors.black, fontSize: 18),
                   ),
-                  Icon(Icons.arrow_drop_down),
+                  const Icon(Icons.arrow_drop_down),
                 ],
               ),
             ),
@@ -159,7 +159,7 @@ class _UploadState extends State<Upload> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 decoration: BoxDecoration(
-                    color: Color(0xff808080),
+                    color: const Color(0xff808080),
                     borderRadius: BorderRadius.circular(30)),
                 child: Row(
                   children: [

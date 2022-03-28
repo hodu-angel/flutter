@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:clone_instagram/controller/auth_controller.dart';
 import 'package:clone_instagram/models/instagram_user.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupPage extends StatefulWidget {
   final String uid;
+
   const SignupPage({Key? key, required this.uid}) : super(key: key);
 
   @override
@@ -13,6 +16,10 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   TextEditingController nicknameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+  XFile? thumbnailXFile;
+
+  void update() => setState(() {});
 
   Widget _avatar() {
     return Column(
@@ -22,15 +29,24 @@ class _SignupPageState extends State<SignupPage> {
           child: SizedBox(
             width: 100,
             height: 100,
-            child: Image.asset(
-              'assets/images/default_image.png',
-              fit: BoxFit.cover,
-            ),
+            child: thumbnailXFile != null
+                ? Image.file(
+                    File(thumbnailXFile!.path),
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    'assets/images/default_image.png',
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
         const SizedBox(height: 15),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () async {
+            thumbnailXFile = await _picker.pickImage(
+                source: ImageSource.gallery, imageQuality: 10);
+            update();
+          },
           child: const Text('이미지 변경'),
         ),
       ],
@@ -93,7 +109,7 @@ class _SignupPageState extends State<SignupPage> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
         child: ElevatedButton(
-          onPressed: (){
+          onPressed: () {
             var signupUser = IUser(
               //uid는 sns로그인에서 받아온 uid
               uid: widget.uid,
