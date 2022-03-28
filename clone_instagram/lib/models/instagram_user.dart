@@ -18,4 +18,13 @@ class IUser {
       description: json['description'] == null ? '' : json['description'] as String,
     );
   }
+
+  Map<String, dynamic> toMap(){
+    return {
+      'uid': uid,
+      'nickname': nickname,
+      'thumbnail': thumbnail,
+      'description': description,
+    };
+  }
 }

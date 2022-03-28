@@ -17,4 +17,15 @@ class UserRepository {
       return IUser.fromJson(data.docs.first.data());
     }
   }
+
+  static Future<bool> signup(IUser user) async {
+    try {
+      //회원가입성공
+      //map형식으로 add해야 된다.
+      await FirebaseFirestore.instance.collection('users').add(user.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

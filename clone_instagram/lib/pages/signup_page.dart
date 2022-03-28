@@ -1,7 +1,18 @@
+import 'package:clone_instagram/controller/auth_controller.dart';
+import 'package:clone_instagram/models/instagram_user.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage extends StatelessWidget {
-  const SignupPage({Key? key}) : super(key: key);
+class SignupPage extends StatefulWidget {
+  final String uid;
+  const SignupPage({Key? key, required this.uid}) : super(key: key);
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  TextEditingController nicknameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   Widget _avatar() {
     return Column(
@@ -27,10 +38,11 @@ class SignupPage extends StatelessWidget {
   }
 
   Widget _nickname() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
-        decoration: InputDecoration(
+        controller: nicknameController,
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(10),
           hintText: '닉네임',
         ),
@@ -39,10 +51,11 @@ class SignupPage extends StatelessWidget {
   }
 
   Widget _description() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 50),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: TextField(
-        decoration: InputDecoration(
+        controller: descriptionController,
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(10),
           hintText: '설명',
         ),
@@ -80,7 +93,15 @@ class SignupPage extends StatelessWidget {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: (){
+            var signupUser = IUser(
+              //uid는 sns로그인에서 받아온 uid
+              uid: widget.uid,
+              nickname: nicknameController.text,
+              description: descriptionController.text,
+            );
+            AuthController.to.signup(signupUser);
+          },
           child: const Text('회원가입'),
         ),
       ),
