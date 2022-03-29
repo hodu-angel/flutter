@@ -4,13 +4,14 @@ import 'package:getx_example/pages/controller/count_controller_with_getx.dart';
 
 class WithGetX extends StatelessWidget {
   const WithGetX({Key? key}) : super(key: key);
+
   //CountControllerWithGetx _countControllerWithGetx = Get.put(CountControllerWithGetx());
 
-  Widget _button() {
+  Widget _button(String id) {
     return ElevatedButton(
       onPressed: () {
         //context가 없으면 별도로 따로 함수로 빼서 만들 수 있다.
-        Get.find<CountControllerWithGetx>().increase();
+        Get.find<CountControllerWithGetx>().increase(id);
         //_countControllerWithGetx.increase();
       },
       child: const Text('+'),
@@ -29,13 +30,24 @@ class WithGetX extends StatelessWidget {
             'GetX',
             style: TextStyle(fontSize: 50),
           ),
-          GetBuilder<CountControllerWithGetx>(builder: (controller) {
-            return Text('${controller.count}',
-                style: const TextStyle(
-                  fontSize: 50,
-                ));
-          }),
-          _button(),
+          GetBuilder<CountControllerWithGetx>(
+              id: 'first',
+              builder: (controller) {
+                return Text('${controller.count}',
+                    style: const TextStyle(
+                      fontSize: 50,
+                    ));
+              }),
+          GetBuilder<CountControllerWithGetx>(
+              id: 'second',
+              builder: (controller) {
+                return Text('${controller.count}',
+                    style: const TextStyle(
+                      fontSize: 50,
+                    ));
+              }),
+          _button('first'),
+          _button('second'),
           // ElevatedButton(
           //   onPressed: () {
           //     //context가 없으면 별도로 따로 함수로 빼서 만들 수 있다.
