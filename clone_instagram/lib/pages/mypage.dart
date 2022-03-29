@@ -1,23 +1,13 @@
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
 import 'package:clone_instagram/components/user_card.dart';
+import 'package:clone_instagram/controller/auth_controller.dart';
+import 'package:clone_instagram/controller/mypage_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class MyPage extends StatefulWidget {
+class MyPage extends GetView<MypageController> {
   const MyPage({Key? key}) : super(key: key);
-
-  @override
-  State<MyPage> createState() => _MyPageState();
-}
-
-class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
-  late TabController tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 2, vsync: this);
-  }
 
   Widget _statisticsOne(String title, int value) {
     return Column(
@@ -38,40 +28,39 @@ class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
   Widget _information() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+      child: Obx(() => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              AvatarWidget(
-                type: AvatarType.TYPE2,
-                thumbPath:
-                    'https://i.pinimg.com/736x/3b/25/6f/3b256f387cb37cc831fa1386e214769a.jpg',
-                size: 80,
+              Row(
+                children: [
+                  AvatarWidget(
+                    type: AvatarType.TYPE2,
+                    thumbPath: controller.targetUser.value.thumbnail!,
+                    size: 80,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(child: _statisticsOne('Post', 15)),
+                        Expanded(child: _statisticsOne('Followers', 11)),
+                        Expanded(child: _statisticsOne('Following', 3)),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(child: _statisticsOne('Post', 15)),
-                    Expanded(child: _statisticsOne('Followers', 11)),
-                    Expanded(child: _statisticsOne('Following', 3)),
-                  ],
+              const SizedBox(height: 10),
+              Text(
+                controller.targetUser.value.description!,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.black,
                 ),
               )
             ],
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            '안녕하세요 hodu_angel입니다. 저랑 친구가 되어주세요.',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.black,
-            ),
-          )
-        ],
-      ),
+          )),
     );
   }
 
@@ -162,7 +151,7 @@ class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
 
   Widget _tabMenu() {
     return TabBar(
-      controller: tabController,
+      controller: controller.tabController,
       indicatorColor: Colors.black,
       indicatorWeight: 2,
       tabs: [
@@ -206,14 +195,16 @@ class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: const Text(
-          'hodu_angel',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 20,
-          ),
-        ),
+        title: Obx(() => Text(
+              //AuthController.to.user.value.nickname!는 내것이기 때문에 문제가 될 수 있다.
+              controller.targetUser.value.nickname!,
+              // 'hodu_angel',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 20,
+              ),
+            )),
         actions: [
           GestureDetector(
             onTap: () {},
