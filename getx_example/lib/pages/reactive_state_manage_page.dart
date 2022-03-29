@@ -20,6 +20,14 @@ class ReactiveStateManagePage extends StatelessWidget {
               'GetX',
               style: TextStyle(fontSize: 50),
             ),
+            //이부분은 현재 사용되지 않는가보다. 오류가 난다..
+            // GetX(builder: (_) {
+            //   return Text(
+            //       '${Get.find<CountControllerWithReactive>().count.value}',
+            //       style: const TextStyle(
+            //         fontSize: 50,
+            //       ));
+            // }),
             Obx(() =>
                 Text('${Get.find<CountControllerWithReactive>().count.value}',
                     style: const TextStyle(
