@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clone_instagram/binding/init_bindings.dart';
 import 'package:clone_instagram/models/instagram_user.dart';
 import 'package:clone_instagram/repository/user_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -17,6 +18,7 @@ class AuthController extends GetxController {
     //DB 조회
     var userData = await UserRepository.loginUserByUid(uid);
     if(userData != null){
+      InitBinding.additionalBinding();
       user(userData);
     }
     return userData;
@@ -28,6 +30,7 @@ class AuthController extends GetxController {
     } else {
       var task = uploadXFile(thumbnail,
           '${signupUser.uid}/profile.${thumbnail.path.split('.').last}');
+
       task.snapshotEvents.listen((event) async {
         print(event.bytesTransferred);
         if (event.bytesTransferred == event.totalBytes &&
