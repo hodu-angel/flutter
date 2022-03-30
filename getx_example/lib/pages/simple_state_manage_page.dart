@@ -22,7 +22,7 @@ class SimpleStateManagePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(
+            Expanded(
               child: WithGetX(),
             ),
             Expanded(

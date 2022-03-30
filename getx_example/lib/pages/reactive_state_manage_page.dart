@@ -39,6 +39,15 @@ class ReactiveStateManagePage extends StatelessWidget {
               },
               child: const Text('+'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Get.find<CountControllerWithReactive>().putNumber(5);
+              },
+              child: const Text(
+                '5로 변경',
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
           ],
         ),
       ),
