@@ -28,14 +28,15 @@ class CountControllerWithReactive extends GetxController {
     nums(NUM.SECOND);
 
     user(User()); //통째로 넣어서 업데이트를 할 수 있거나
-    user.update((_user) { //일부만 변경할 수 있다.
+    user.update((_user) {
+      //일부만 변경할 수 있다.
       _user!.name = 'hodu_angel';
     });
 
     //list의 update
-    //list.addAll();
-    //list.add();
-    list.addIf(user.value.name == 'hodu','okay'); //item: 추가할 값
+    // list.addAll();
+    // list.add();
+    list.addIf(user.value.name == 'hodu', 'okay'); //item: 추가할 값
   }
 
   void putNumber(int value) {
