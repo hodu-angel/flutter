@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_example/binding/binding_page.dart';
 import 'package:getx_example/home.dart';
 import 'package:getx_example/pages/binding.dart';
 import 'package:getx_example/pages/controller/count_controller_with_getx.dart';
@@ -63,9 +64,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/binding',
           page: () => const BindingPage(),
-          binding: BindingsBuilder(() {
-            Get.put(CountControllerWithGetx());
-          }),
+          binding: BindingPageBinding(),
         ),
       ],
     );
