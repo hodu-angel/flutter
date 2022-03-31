@@ -44,11 +44,12 @@ class DependencyManagePage extends StatelessWidget {
             //putAsync는 put처럼 비슷하지만 페이지에 접근할 때
             //비동기식으로 데이터를 받아오거나 가공처리를 하고나서
             //controller를 instance화 할 때 사용된다.
+            //잘 사용안해보셨다.
             ElevatedButton(
               onPressed: () {
                 Get.to(const GetPut(), binding: BindingsBuilder(() {
                   Get.putAsync<DependencyController>(() async {
-                    await Future.delayed(const Duration(seconds: 5));
+                    await Future.delayed(const Duration(seconds: 5)); //확인차 test
                     return DependencyController();
                   });
                 }));
@@ -56,9 +57,16 @@ class DependencyManagePage extends StatelessWidget {
               //비동기를 처리해주고 put을 해준다.
               child: const Text('Get.putAsync'),
             ),
+
+            //잘 사용은 안할 것 같다.
             ElevatedButton(
-              onPressed: () {},
-              child: const Text(''),
+              onPressed: () {
+                Get.to(const GetPut(), binding: BindingsBuilder(() {
+                  Get.create<DependencyController>(
+                      () => DependencyController());
+                }));
+              },
+              child: const Text('Get.create'),
             ),
           ],
         ),
