@@ -63,6 +63,12 @@ class Home extends StatelessWidget {
               },
               child: const Text('의존성 관리'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/binding');
+              },
+              child: const Text('바인딩 관리'),
+            ),
           ],
         ),
       ),

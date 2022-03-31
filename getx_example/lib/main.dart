@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_example/home.dart';
+import 'package:getx_example/pages/binding.dart';
+import 'package:getx_example/pages/controller/count_controller_with_getx.dart';
+import 'package:getx_example/pages/controller/dependency_controller.dart';
 import 'package:getx_example/pages/named/first.dart';
 import 'package:getx_example/pages/named/second.dart';
 import 'package:getx_example/pages/next.dart';
@@ -39,11 +42,31 @@ class MyApp extends StatelessWidget {
       // },
       getPages: [
         //transition: 화면 전환시 애니메이션
-        GetPage(name: '/', page: ()=> const Home(), transition: Transition.zoom),
-        GetPage(name: '/first', page: ()=> const FirstNamedPage(), transition: Transition.zoom),
-        GetPage(name: '/second', page: ()=> const SecondNamedPage(), transition: Transition.zoom),
-        GetPage(name: '/next', page: ()=> const NextPage(), transition: Transition.zoom),
-        GetPage(name: '/user/:uid', page: ()=>const UserPage(), transition: Transition.zoom),
+        GetPage(
+            name: '/', page: () => const Home(), transition: Transition.zoom),
+        GetPage(
+            name: '/first',
+            page: () => const FirstNamedPage(),
+            transition: Transition.zoom),
+        GetPage(
+            name: '/second',
+            page: () => const SecondNamedPage(),
+            transition: Transition.zoom),
+        GetPage(
+            name: '/next',
+            page: () => const NextPage(),
+            transition: Transition.zoom),
+        GetPage(
+            name: '/user/:uid',
+            page: () => const UserPage(),
+            transition: Transition.zoom),
+        GetPage(
+          name: '/binding',
+          page: () => const BindingPage(),
+          binding: BindingsBuilder(() {
+            Get.put(CountControllerWithGetx());
+          }),
+        ),
       ],
     );
   }
