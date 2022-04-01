@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_controller_service/app.dart';
+import 'package:getx_controller_service/controller/getx_controller_test.dart';
 
 void main() {
+  initService();
   runApp(const MyApp());
+}
+
+void initService(){
+  //permanent: 영구적으로 사용하겠다.
+  Get.put(GetxControllerTest(), permanent: true);
 }
 
 class MyApp extends StatelessWidget {
