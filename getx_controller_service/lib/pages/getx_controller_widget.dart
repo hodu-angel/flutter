@@ -14,7 +14,7 @@ class GetxControllerWidget extends GetView<GetxControllerTest> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Obx(() => Text(
-                  controller.count.toString(),
+                  controller.count.value.toString(),
                   style: const TextStyle(
                     fontSize: 40,
                   ),

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_controller_service/app.dart';
-import 'package:getx_controller_service/controller/getx_controller_test.dart';
 
 void main() {
-  initService();
+  //initService();
   runApp(const MyApp());
 }
 
-void initService(){
-  //permanent: 영구적으로 사용하겠다.
-  Get.put(GetxControllerTest(), permanent: true);
-}
+// void initService(){
+//   //permanent: 영구적으로 사용하겠다.
+//   Get.put(GetxControllerTest(), permanent: true);
+//}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -19,6 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //Get.testMode = true;
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

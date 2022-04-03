@@ -18,19 +18,19 @@ class App extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Get.to(
+                Get.to( ()=>
                   const GetxControllerWidget(),
-                  // binding: BindingsBuilder(() {
-                  //   Get.lazyPut<GetxControllerTest>(
-                  //           () => GetxControllerTest());
-                  // }),
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut<GetxControllerTest>(
+                            () => GetxControllerTest());
+                  }),
                 );
               },
               child: const Text('Getx Controller'),
             ),
             ElevatedButton(
               onPressed: () {
-                Get.to(
+                Get.to( ()=>
                   const GetxServiceWidget(),
                   binding: BindingsBuilder((){
                     Get.lazyPut<GetxServiceTest>(
