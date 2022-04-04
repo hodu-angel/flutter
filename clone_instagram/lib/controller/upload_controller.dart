@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:path/path.dart';
+import 'package:image/image.dart' as imageLib;
+import 'package:photofilters/photofilters.dart';
 
 class UploadController extends GetxController {
   var albums = <AssetPathEntity>[];
@@ -59,5 +63,25 @@ class UploadController extends GetxController {
   void changeAlbum(AssetPathEntity album) async {
     headerTitle(album.name);
     await _pagingPhotos(album);
+  }
+
+  void gotoImageFilter() async {
+    var file = await selectedImage.value.file;
+    var fileName = basename(file!.path);
+    var image = imageLib.decodeImage(file.readAsBytesSync());
+    image = imageLib.copyResize(image!, width: 600);
+    var imagefile = await Navigator.push(
+      Get.context!,
+      MaterialPageRoute(
+        builder: (context) => PhotoFilterSelector(
+          title: const Text("Photo Filter Example"),
+          image: image!,
+          filters: presetFiltersList,
+          filename: fileName,
+          loader: const Center(child: CircularProgressIndicator()),
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
   }
 }
