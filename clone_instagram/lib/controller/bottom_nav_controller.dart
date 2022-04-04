@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:clone_instagram/components/message_popup.dart';
+import 'package:clone_instagram/controller/upload_controller.dart';
 import 'package:clone_instagram/pages/upload.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,9 @@ class BottomNavController extends GetxController {
     var page = PageName.values[value];
     switch (page) {
       case PageName.UPLOAD: //page전환이 아니고 popUp으로 떠야된다.
-        Get.to(() => const Upload());
+        Get.to(() => Upload(), binding: BindingsBuilder((){
+          Get.put(UploadController());
+        }));
         break;
       //동일하게 _changePage가 들어가니, 한번에 처리하도록 마지막에 한줄로 표현함
       case PageName.HOME:

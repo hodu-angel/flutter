@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:clone_instagram/components/image_data.dart';
+import 'package:clone_instagram/controller/upload_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -8,76 +9,26 @@ import 'package:photo_manager/photo_manager.dart';
 //내 device의 folder group을 그대로 불러들여서 뿌려주게 할 것임
 //의존성을 줄이기 위해 stless Getx에서 statefulWidget을 사용함
 //StatefulWidget의 특성상 builder가 재호출되게 된다. 그러므로 _imageSelectList에서 이미지변경시 전체가 reload된다.
-class Upload extends StatefulWidget {
-  const Upload({Key? key}) : super(key: key);
-
-  @override
-  State<Upload> createState() => _UploadState();
-}
-
-class _UploadState extends State<Upload> {
-  var albums = <AssetPathEntity>[];
-  var imageList = <AssetEntity>[];
-  var headerTitle = '';
-  AssetEntity? selectedImage;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadPhotos();
-  }
-
-  void _loadPhotos() async {
-    //permission 가져오기
-    var result = await PhotoManager.requestPermissionExtend();
-    if (result.isAuth) {
-      albums = await PhotoManager.getAssetPathList(
-        type: RequestType.image,
-        filterOption: FilterOptionGroup(
-          imageOption: const FilterOption(
-            sizeConstraint: SizeConstraint(minHeight: 100, minWidth: 100),
-          ),
-          orders: [
-            //asc: false : 최신 image먼저 보여준다.
-            const OrderOption(type: OrderOptionType.createDate, asc: false),
-          ],
-        ),
-      );
-      _loadData();
-    } else {}
-  }
-
-  void _loadData() async {
-    headerTitle = albums.first.name;
-    await _pagingPhotos();
-    update();
-  }
-
-  Future<void> _pagingPhotos() async {
-    //pageSize: 몇장을 불러올 것인지.
-    var photos = await albums.first.getAssetListPaged(0, 30);
-    imageList.addAll(photos);
-    selectedImage = imageList.first;
-  }
+class Upload extends GetView<UploadController> {
+  Upload({Key? key}) : super(key: key);
 
   //매번 update를 해야되기에 축약함
-  void update() => setState(() {});
+  //void update() => setState(() {});
 
   Widget _imagePreview() {
-    var width = MediaQuery.of(context).size.width;
-    return Container(
-      width: width,
-      height: width,
-      color: Colors.grey,
-      child: selectedImage == null
-          ? Container()
-          : _photoWidget(selectedImage!, width.toInt(), builder: (data) {
-              return Image.memory(
-                data,
-                fit: BoxFit.cover,
-              );
-            }),
-    );
+    var width = Get.width;
+    return Obx(() => Container(
+          width: width,
+          height: width,
+          color: Colors.grey,
+          child: _photoWidget(controller.selectedImage.value, width.toInt(),
+              builder: (data) {
+            return Image.memory(
+              data,
+              fit: BoxFit.cover,
+            );
+          }),
+        ));
   }
 
   Widget _header() {
@@ -91,18 +42,19 @@ class _UploadState extends State<Upload> {
             onTap: () {
               //showModalBottomSheet는 default로 backgroundColor가 white다.
               showModalBottomSheet(
-                context: context,
+                context: Get.context!,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
                 ),
                 //height를 주지 않아도 끝까지 확장되어 보여준다.
-                isScrollControlled: albums.length > 10 ? true : false,
+                isScrollControlled:
+                    controller.albums.length > 10 ? true : false,
                 //gallery_name이 많으면 SafeArea까지 영역을 침범하게되어 스크롤이 안 될 수 있으므로 top영역을 빼준값을 maxHeight로 지정한다.
                 constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top,
+                  maxHeight: MediaQuery.of(Get.context!).size.height -
+                      MediaQuery.of(Get.context!).padding.top,
                 ),
                 builder: (_) => Container(
                   //height: albums.length * 70,
@@ -124,12 +76,18 @@ class _UploadState extends State<Upload> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: List.generate(
-                              albums.length,
+                              //widget이 그려지고 나서 데이터가 들어온다.
+                              controller.albums.length,
                               //100,
-                              (index) => Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 20),
-                                child: Text(albums[index].name),
+                              (index) => GestureDetector(
+                                onTap: (){
+                                  controller.changeAlbum(controller.albums[index]);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 20),
+                                  child: Text(controller.albums[index].name),
+                                ),
                               ),
                             ),
                           ),
@@ -144,10 +102,10 @@ class _UploadState extends State<Upload> {
               padding: const EdgeInsets.all(5.0),
               child: Row(
                 children: [
-                  Text(
-                    headerTitle,
+                  Obx(()=>Text(
+                    controller.headerTitle.value,
                     style: const TextStyle(color: Colors.black, fontSize: 18),
-                  ),
+                  )),
                   const Icon(Icons.arrow_drop_down),
                 ],
               ),
@@ -195,7 +153,7 @@ class _UploadState extends State<Upload> {
 
   //SingleChildScrollView와 GridView가 같이 사용되면 오류가 발생한다.
   Widget _imageSelectList() {
-    return GridView.builder(
+    return Obx(()=>GridView.builder(
         //scroll을 하지 않겠다.
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -206,24 +164,28 @@ class _UploadState extends State<Upload> {
             crossAxisSpacing: 1,
             //childAspectRatio: 정사각형의 size가 나온다.
             childAspectRatio: 1),
-        itemCount: imageList.length,
+        itemCount: controller.imageList.length,
         itemBuilder: (BuildContext context, int index) {
-          return _photoWidget(imageList[index], 200, builder: (data) {
+          return _photoWidget(controller.imageList[index], 200,
+              builder: (data) {
             return GestureDetector(
               onTap: () {
-                selectedImage = imageList[index];
-                update();
+                controller.changeSelectedImage(controller.imageList[index]);
+                //update();
               },
-              child: Opacity(
-                opacity: imageList[index] == selectedImage ? 0.3 : 1,
-                child: Image.memory(
-                  data,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              child: Obx(() => Opacity(
+                    opacity: controller.imageList[index] ==
+                            controller.selectedImage.value
+                        ? 0.3
+                        : 1,
+                    child: Image.memory(
+                      data,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
             );
           });
-        });
+        }));
   }
 
   //asset과 selectedImage가 동일하다면 하얗게 표시해준다.

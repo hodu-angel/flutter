@@ -1,6 +1,7 @@
 import 'package:clone_instagram/controller/auth_controller.dart';
 import 'package:clone_instagram/controller/bottom_nav_controller.dart';
 import 'package:clone_instagram/controller/mypage_controller.dart';
+import 'package:clone_instagram/controller/upload_controller.dart';
 import 'package:get/get.dart';
 
 //앱 실행동시에 getx controller들을 필요에 따라 instance를 올려주기 위한 class
