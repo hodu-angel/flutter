@@ -38,13 +38,15 @@ class UploadController extends GetxController {
   void _loadData() async {
     changeAlbum(albums.first);
     //headerTitle(albums.first.name);
-    await _pagingPhotos();
     //update();
   }
 
-  Future<void> _pagingPhotos() async {
+  Future<void> _pagingPhotos(AssetPathEntity album) async {
+    //앨범 변경시 페이지 초기화를 한번씩 해줘야 된다.
+    imageList.clear();
+
     //pageSize: 몇장을 불러올 것인지.
-    var photos = await albums.first.getAssetListPaged(0, 30);
+    var photos = await album.getAssetListPaged(0, 30);
     imageList.addAll(photos);
     //첫번째 이미지 변경
     changeSelectedImage(imageList.first);
@@ -54,7 +56,8 @@ class UploadController extends GetxController {
     selectedImage(image);
   }
 
-  void changeAlbum(AssetPathEntity album){
+  void changeAlbum(AssetPathEntity album) async {
     headerTitle(album.name);
+    await _pagingPhotos(album);
   }
 }
