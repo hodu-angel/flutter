@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:clone_instagram/pages/upload/upload_description.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -11,6 +14,7 @@ class UploadController extends GetxController {
   RxList<AssetEntity> imageList = <AssetEntity>[].obs;
   Rx<AssetEntity> selectedImage =
       AssetEntity(id: '0', typeInt: 0, width: 0, height: 0).obs;
+  File? filteredImage;
 
   @override
   void onInit() {
@@ -69,7 +73,7 @@ class UploadController extends GetxController {
     var file = await selectedImage.value.file;
     var fileName = basename(file!.path);
     var image = imageLib.decodeImage(file.readAsBytesSync());
-    image = imageLib.copyResize(image!, width: 600);
+    image = imageLib.copyResize(image!, width: 1000);
     var imagefile = await Navigator.push(
       Get.context!,
       MaterialPageRoute(
@@ -83,5 +87,9 @@ class UploadController extends GetxController {
         ),
       ),
     );
+    if (imagefile != null && imagefile.containsKey('image_filtered')) {
+      filteredImage = imagefile['image_filtered'];
+      Get.to(()=>const UploadDescription());
+    }
   }
 }
