@@ -20,11 +20,12 @@ class UploadDescription extends GetView<UploadController> {
               fit: BoxFit.cover,
             ),
           ),
-          const Expanded(
+          Expanded(
             child: TextField(
+              controller: controller.textEditingController,
               //maxLines: null 여러줄 입력이 가능하다. 키보드에 엔터키가 활성화 된다.
               maxLines: null,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
                 errorBorder: InputBorder.none,
@@ -70,7 +71,7 @@ class UploadDescription extends GetView<UploadController> {
                   fontSize: 17,
                 ),
               ),
-              Switch(value: false, onChanged: (bool value){})
+              Switch(value: false, onChanged: (bool value) {})
             ],
           ),
           Row(
@@ -82,7 +83,7 @@ class UploadDescription extends GetView<UploadController> {
                   fontSize: 17,
                 ),
               ),
-              Switch(value: false, onChanged: (bool value){})
+              Switch(value: false, onChanged: (bool value) {})
             ],
           ),
           Row(
@@ -94,7 +95,7 @@ class UploadDescription extends GetView<UploadController> {
                   fontSize: 17,
                 ),
               ),
-              Switch(value: false, onChanged: (bool value){})
+              Switch(value: false, onChanged: (bool value) {})
             ],
           ),
         ],
@@ -127,7 +128,7 @@ class UploadDescription extends GetView<UploadController> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: controller.uploadPost,
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: ImageData(
@@ -147,10 +148,8 @@ class UploadDescription extends GetView<UploadController> {
             bottom: 0,
             top: 0,
             child: GestureDetector(
-              onTap: () {
-                //화면밖을 누르면 닫힌다.
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
+              //화면밖을 누르면 닫힌다.
+              onTap: controller.unfocusKeyboard,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
