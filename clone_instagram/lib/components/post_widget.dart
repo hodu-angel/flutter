@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clone_instagram/components/avatar_widget.dart';
 import 'package:clone_instagram/components/image_data.dart';
+import 'package:clone_instagram/models/post.dart';
 import 'package:expandable_text/expandable_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({Key? key}) : super(key: key);
+  final Post post;
+  const PostWidget({Key? key, required this.post}) : super(key: key);
 
   Widget _header() {
     return Padding(
@@ -16,10 +18,9 @@ class PostWidget extends StatelessWidget {
         children: [
           AvatarWidget(
               type: AvatarType.TYPE3,
-              nickname: 'hodu_angel',
+              nickname: post.userInfo!.nickname,
               size: 40,
-              thumbPath:
-                  'https://cdn.pixabay.com/photo/2020/06/02/06/52/cat-5249722__480.jpg'),
+              thumbPath: post.userInfo!.thumbnail!),
           GestureDetector(
             onTap: () {},
             child: Padding(
@@ -37,8 +38,7 @@ class PostWidget extends StatelessWidget {
 
   Widget _image() {
     return CachedNetworkImage(
-        imageUrl:
-            'https://img.insight.co.kr/static/2021/08/13/700/img_20210813111843_z6yn7ub3.webp');
+        imageUrl: post.thumbnail!);
   }
 
   Widget _infoCount() {
@@ -68,14 +68,14 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch, //컬럼을 꽉차게 하기.
         children: [
-          const Text(
-            '좋아요 150개',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            '좋아요 ${post.likeCount ?? 0}개',
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           //expandable_text library추가하고
           ExpandableText(
-            '컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.\n컨텐츠1입니다.\n',
-            prefixText: 'hodu_angel',
+            post.description ?? '',
+            prefixText: post.userInfo!.nickname,
             //닉네임
             onPrefixTap: () {
               print('hodu_angel 페이지 이동');
@@ -99,11 +99,11 @@ class PostWidget extends StatelessWidget {
   Widget _replyTextBtn() {
     return GestureDetector(
       onTap: () {},
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Text(
-          '댓글 199개 모두 보기',
-          style: TextStyle(
+          '댓글 ${post.replyCount ?? 0}개 모두 보기',
+          style: const TextStyle(
             color: Colors.grey,
             fontSize: 13,
           ),
@@ -113,11 +113,11 @@ class PostWidget extends StatelessWidget {
   }
 
   Widget _dateAgo() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Text(
-        '1일전',
-        style: TextStyle(color: Colors.grey, fontSize: 11),
+        timeago.format(post.createdAt!),
+        style: const TextStyle(color: Colors.grey, fontSize: 11),
       ),
     );
   }

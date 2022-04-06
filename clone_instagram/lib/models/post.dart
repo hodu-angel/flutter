@@ -7,6 +7,7 @@ class Post {
   final String? thumbnail;
   final String? description;
   final int? likeCount;
+  final int? replyCount;
   final IUser? userInfo;
   final String? uid;
   final DateTime? createdAt;
@@ -18,6 +19,7 @@ class Post {
     this.thumbnail,
     this.description,
     this.likeCount,
+    this.replyCount,
     this.userInfo,
     this.uid,
     this.createdAt,
@@ -44,6 +46,7 @@ class Post {
       description:
           json['description'] == null ? '' : json['description'] as String,
       likeCount: json['likeCount'] == null ? 0 : json['likeCount'] as int,
+      replyCount: json['replyCount'] == null ? 0 : json['replyCount'] as int,
       userInfo:
           json['userInfo'] == null ? null : IUser.fromJson(json['userInfo']),
       uid: json['uid'] == null ? '' : json['uid'] as String,
@@ -62,6 +65,7 @@ class Post {
     String? thumbnail,
     String? description,
     int? likeCount,
+    int? replyCount,
     IUser? userInfo,
     String? uid,
     DateTime? createdAt,
@@ -73,6 +77,7 @@ class Post {
       thumbnail: thumbnail ?? this.thumbnail,
       description: description ?? this.description,
       likeCount: likeCount ?? this.likeCount,
+      replyCount: replyCount ?? this.replyCount,
       userInfo: userInfo ?? this.userInfo,
       uid: uid ?? this.uid,
       createdAt: createdAt ?? this.createdAt,
@@ -81,18 +86,21 @@ class Post {
     );
   }
 
-  Map<String, dynamic> toMap(){
+  //웬만한 데이터는 snake기법으로 저장하는것이 좋다.
+  //parsing할때도 snake기법으로 바꿔줘야 된다.
+  //아래처럼 해도 상관은 없지만..
+  Map<String, dynamic> toMap() {
     return {
-    'id' : id,
-    'thumbnail' : thumbnail,
-    'description' : description,
-    'likeCount' : likeCount,
-    'userInfo' : userInfo!.toMap(),
-    'uid' : uid,
-    'createdAt' : createdAt,
-    'updatedAt' : updatedAt,
-    'deletedAt' : deletedAt,
+      'id': id,
+      'thumbnail': thumbnail,
+      'description': description,
+      'likeCount': likeCount,
+      'replyCount': replyCount,
+      'userInfo': userInfo!.toMap(),
+      'uid': uid,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+      'deletedAt': deletedAt,
     };
   }
-
 }
