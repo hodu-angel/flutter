@@ -1,6 +1,6 @@
 # Json Serializable
 [![build Status](https://img.shields.io/pub/v/json_serializable.svg)](https://pub.dev/packages/json_serializable) [![build Status](https://img.shields.io/pub/v/json_annotation.svg)](https://pub.dev/packages/json_annotation) [![issues](https://img.shields.io/github/issues-raw/dart-lang/build/package%3A%20build_runner.svg)](https://github.com/dart-lang/build/labels/package%3A%20build_runner) [![build Status](https://img.shields.io/pub/v/build_runner.svg)](https://pub.dev/packages/build_runner)
-- 코드의 직렬화를 위해 사용한다.  
+- 코드의 직렬화를 위해 사용한다. https://flutter-ko.dev/docs/development/data-and-backend/json
 
 - json_annotation과 json_serializable은 의존관계를 맺고 있기에,  
 `import 'package:json_annotation/json_annotation.dart';` 를 필요로 한다.
