@@ -1,7 +1,7 @@
 # Freezed
-freezed: [![buildState](https://img.shields.io/pub/v/freezed.svg)](https://pub.dev/packages/freezed)
-build_runner: [![buildState](https://img.shields.io/pub/v/build_runner.svg)](https://pub.dev/packages/build_runner)
-freezed_annotation: https://pub.dev/packages/freezed_annotation
+freezed: [![buildState](https://img.shields.io/pub/v/freezed.svg)](https://pub.dev/packages/freezed) <br>
+build_runner: [![buildState](https://img.shields.io/pub/v/build_runner.svg)](https://pub.dev/packages/build_runner) <br>
+freezed_annotation: https://pub.dev/packages/freezed_annotation <br>
 
 - 데이터 클래스에서 흔히 필요한 기능들을 한번에 제공해주는 라이브러리이다.
 - 비슷한 계열의 json_serializable이 있으며, freezed는 `json_serializable`와 
@@ -48,5 +48,5 @@ class Note with _$Note {
 }
 ```
 
-build_runner 실행 후 아래와 같은 파일을 얻을 수 있다.
+build_runner 실행 후 아래와 같은 파일을 얻을 수 있다. <br>
 ![build_file](https://user-images.githubusercontent.com/90611410/212479725-cc0bab61-e4f5-43be-97c7-0c450d2398c4.PNG)
