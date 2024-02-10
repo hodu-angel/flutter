@@ -54,17 +54,25 @@ class SendCounterEx extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // use로 시작되는 메서드들은 대부분 빌드 사이클 동안 객체가 유지됩니다.
-    // var counter = useState(outCounter);
+    var counter = useState(outCounter);
 
+    // keys값을 입력하지 않으면 매 순간 useEffect를 호출하게 됩니다.
+    useEffect(() {
+      log('sendCounter useEffect 발동 ${counter.value}');
+      return;
+    });
+
+    // StatelessWidget 및 StatefultWidget의 initState와 동일하게 실행됩니다.
     // useEffect(() {
-    //   log('sendCounter useEffect 발동 ${counter.value}');
+    //   log('sendCounter useEffect 발동');
+    //   return;
+    // }, []);
+
+    // keys값의 변수값이 변동사항이 있을경우 useEffect를 호출하게 됩니다.
+    // useEffect(() {
+    //   log('sendCounter useEffect 발동');
     //   return;
     // }, [outCounter]);
-
-    useEffect(() {
-      log('sendCounter useEffect 발동');
-      return;
-    }, [outCounter]);
 
     return Center(
       child: Column(
@@ -74,6 +82,14 @@ class SendCounterEx extends HookWidget {
         ],
       ),
     );
+    // return Center(
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       Text(counter.value.toString()),
+    //     ],
+    //   ),
+    // );
   }
 }
 
